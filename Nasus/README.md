@@ -1,0 +1,1 @@
+Sitemizin stabil(düzgün)çalışan bir nasus scripti olmadığından türkçe databasede yoktur iyi günler 
