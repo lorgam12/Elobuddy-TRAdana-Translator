@@ -14,7 +14,7 @@ namespace Auto_Carry_Vayne
         private static void Loading_OnLoadingComplete(EventArgs args)
         {
             if (Variables._Player.ChampionName != "Vayne") return;
-            Chat.Print("Auto Carry Vayne loaded! Made by Aka.");
+            Chat.Print("Auto Carry Vayne Yuklendi! Aka tarafindan yapildi, TRAdana tarafından cevrildi");
             Manager.Manager.Load();
         }
     }

@@ -36,7 +36,7 @@ namespace UBKennen
                 ComboMenu.Add("useQCombo", new CheckBox("Kullan Q"));
                 ComboMenu.Add("useWCombo", new CheckBox("Kullan W"));
                 ComboMenu.Add("WHitCombo", new Slider("W kullanmak için gereken düşman", 1, 1, 5));
-                ComboMenu.Add("useECombo", new CheckBox("Kullan E", false));                
+                ComboMenu.Add("useECombo", new CheckBox("Kullan E", false));
                 ComboMenu.Add("useRCombo", new CheckBox("Kullan R"));
                 ComboMenu.Add("RHitCombo", new Slider("R Kullanalabilecek düşman sayısı", 2, 1, 5));
                 ComboMenu.Add("sep", new Separator());
@@ -70,7 +70,7 @@ namespace UBKennen
                 LaneClear.Add("sep5", new Separator(40));
             }
             //JungleClear Menu
-            JungleClear =Menu.AddSubMenu("JungleClear");
+            JungleClear = Menu.AddSubMenu("JungleClear");
             {
                 JungleClear.AddGroupLabel("OrmanTemizleme Ayarları");
                 JungleClear.Add("useQJc", new CheckBox("Q Kullan"));
@@ -108,7 +108,7 @@ namespace UBKennen
                 MiscMenu.Add("useQKS", new CheckBox("Q Kullan"));
                 MiscMenu.Add("useWKS", new CheckBox("W Kullan"));
 
-                MiscMenu.AddLabel("Activator Item");
+                MiscMenu.AddLabel("İtem Aktifleştirici");
                 MiscMenu.Add("item.1", new CheckBox("Otomatik Kullan bilgewater palası"));
                 MiscMenu.Add("item.1MyHp", new Slider("Benim canım şundan az {0}%", 95));
                 MiscMenu.Add("item.1EnemyHp", new Slider("Düşman canı şundan az {0}%", 70));

@@ -69,7 +69,7 @@ namespace UBSivir
                 HarassMenu.AddGroupLabel("Dürtme Ayarları");
                 HarassMenu.Add("useQHr", new CheckBox("Kullan Q"));
                 HarassMenu.Add("useQHr2", new CheckBox("Only use Q if no minion between"));
-                HarassMenu.Add("useWHr", new CheckBox("Kullan W"));               
+                HarassMenu.Add("useWHr", new CheckBox("Kullan W"));
                 HarassMenu.Add("HrManage", new Slider("If mana percent below {0} stop harass", 50));
             }
 
@@ -89,7 +89,7 @@ namespace UBSivir
                 JungleClear.AddGroupLabel("Ormantemizleme Ayarları");
                 JungleClear.Add("useQJc", new CheckBox("Q Kullan"));
                 JungleClear.Add("useWJc", new CheckBox("W Kullan"));
-                JungleClear.Add("WHitJc", new Slider("Canavar say", 2, 1, 4));               
+                JungleClear.Add("WHitJc", new Slider("Canavar say", 2, 1, 4));
                 JungleClear.Add("JcManager", new Slider("Eğer manam şundan azsa kullanma", 50));
             }
 

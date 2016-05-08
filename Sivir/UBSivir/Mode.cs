@@ -22,16 +22,11 @@ namespace UBSivir
                     Spells.Q.Cast(target.ServerPosition);
                 }
             }
-            if (Config.ComboMenu["useWCombo"].Cast<CheckBox>().CurrentValue
-                && Spells.W.IsReady())
-            {
-                var target = TargetSelector.GetTarget(Player.Instance.GetAutoAttackRange(), DamageType.Physical);
-                if (target != null && target.IsValidTarget())
-                {
-                    Spells.W.Cast();
-                    Orbwalker.ResetAutoAttack();
-                }
-            }
+            if (Spells.W.IsReady()
+                && Config.ComboMenu["useWCombo"].Cast<CheckBox>().CurrentValue
+                && TargetSelector.GetTarget(550, DamageType.Physical) != null
+                && TargetSelector.GetTarget(550, DamageType.Physical).IsValidTarget()
+                && Spells.W.Cast()) Orbwalker.ResetAutoAttack();
             if (Config.ComboMenu["useRCombo"].Cast<CheckBox>().CurrentValue
                       && Spells.R.IsReady())
             {
@@ -69,15 +64,11 @@ namespace UBSivir
                     Spells.QLine.Cast(target);
                 }
             }
-            if (Config.HarassMenu["useWHr"].Cast<CheckBox>().CurrentValue && Spells.W.IsReady())
-            {
-                var target = TargetSelector.GetTarget(Player.Instance.GetAutoAttackRange(), DamageType.Physical);
-                if (target != null && target.IsValidTarget())
-                {
-                    Spells.W.Cast();
-                    Orbwalker.ResetAutoAttack();
-                }
-            }
+            if (Spells.W.IsReady()
+              && Config.HarassMenu["useWHr"].Cast<CheckBox>().CurrentValue
+              && TargetSelector.GetTarget(550, DamageType.Physical) != null
+              && TargetSelector.GetTarget(550, DamageType.Physical).IsValidTarget()
+              && Spells.W.Cast()) Orbwalker.ResetAutoAttack();
         }
         //LaneClear
         public static void LaneClear()
@@ -146,7 +137,7 @@ namespace UBSivir
                 Spells.Q.Cast(qminion.ServerPosition);
             }
             if (Config.LasthitMenu["useWLh"].Cast<CheckBox>().CurrentValue
-            && Spells.W.IsReady()) return;
+            && Spells.W.IsReady())
             {
                 var wminion = (Obj_AI_Minion)MinionWlh(GameObjectType.obj_AI_Minion, AttackSpell.W);
                 if (wminion != null && Player.Instance.ManaPercent >= Config.LasthitMenu["LhManager"].Cast<Slider>().CurrentValue)

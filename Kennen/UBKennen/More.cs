@@ -33,7 +33,7 @@ namespace UBKennen
         private static void OnUpdate(EventArgs args)
         {
             Mode.Useheal();
-            Mode.UseIgnite();
+            Mode.Killsteal();
         }
         private static void GameOnTick(EventArgs args)
         {
