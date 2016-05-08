@@ -3,4 +3,4 @@ Turkish Translate
 
 TRAdana Çevirilerini Kullandığınız İçin Teşekkürler Herhangi bir hatada lütfen pm atınız veya bana ulaşınız 
 
-Discord: https://discord.gg/0vbMXrMAqQppIKw0
+Discord: https://discord.gg/0vbMXrMAqQoqOS1w
