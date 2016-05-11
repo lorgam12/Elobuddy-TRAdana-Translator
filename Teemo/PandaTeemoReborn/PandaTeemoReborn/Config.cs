@@ -25,11 +25,11 @@ namespace PandaTeemoReborn
         static Config()
         {
             PandaTeemoReborn = MainMenu.AddMenu("PandaTeemoReborn", "PTR");
-            PandaTeemo.AddGroupLabel("Bu addon KarmaPanda Tarafından Geliştirilmiştir.");
-            PandaTeemo.AddGroupLabel(
-                "Kimseden yardım alınmamıştır");
-            PandaTeemo.AddGroupLabel("Addonumu Kullandığınız için Teşekkür Ederim");
-            PandaTeemo.AddGroupLabel("Çeviri TRAdana");
+            PandaTeemoReborn.AddGroupLabel("Bu addon KarmaPanda Tarafından Geliştirilmiştir.");
+            PandaTeemoReborn.AddGroupLabel(
+                "Kimseden yardım alınmamıştır.");
+            PandaTeemoReborn.AddGroupLabel("Addonumu Kullandığınız için Teşekkür Ederim!");
+            PandaTeemoReborn.AddGroupLabel("Çeviri TRAdana");
 
             ComboMenu = PandaTeemoReborn.AddSubMenu("Combo", "Combo");
             ComboMenu.AddLabel("Büyü Ayarları");
@@ -227,7 +227,7 @@ namespace PandaTeemoReborn
             DrawingMenu.Add("drawR", new CheckBox("Göster R Menzili"));
             DrawingMenu.Add("drawautoR", new CheckBox("Göster Otomatik mantar atma yerleri"));
             DrawingMenu.Add("drawdoubleR", new CheckBox("Göster Çift mantar mantığını", false));
-            
+
             MiscMenu = PandaTeemoReborn.AddSubMenu("Misc", "Misc");
             MiscMenu.AddGroupLabel("Büyü Ayarları");
             MiscMenu.Add("autoQ", new CheckBox("Otomatik Q", false));
