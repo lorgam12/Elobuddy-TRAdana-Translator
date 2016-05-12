@@ -1,5 +1,6 @@
 ﻿namespace KappaUtility.Summoners
 {
+    using System;
     using System.Linq;
 
     using EloBuddy;
@@ -20,18 +21,20 @@
                 var smitecombo = SummMenu["smitecombo"].Cast<CheckBox>().CurrentValue && Smite.IsReady()
                                  && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo);
                 var smiteks = SummMenu["smiteks"].Cast<CheckBox>().CurrentValue && Smite.IsReady();
-
-                foreach (var jmob in EntityManager.MinionsAndMonsters.GetJungleMonsters())
+                if (smitemob)
                 {
-                    if (jmob != null && Junglemobs.Contains(jmob.BaseSkinName) && smitemob)
+                    if (Smite.Handle.Ammo == 1 && SummMenu["smitesavej"].Cast<CheckBox>().CurrentValue)
                     {
-                        if (jmob.IsHPBarRendered && jmob.IsKillable() && SummMenu[jmob.BaseSkinName].Cast<CheckBox>().CurrentValue)
+                        return;
+                    }
+                    var jmobs = EntityManager.MinionsAndMonsters.GetJungleMonsters().Where(j => (SRJunglemobs.Contains(j.BaseSkinName) || TTJunglemobs.Contains(j.BaseSkinName)) && j.IsKillable() && j.IsValidTarget(Smite.Range));
+                    foreach (var jmob in jmobs)
+                    {
+                        if (jmob != null && SummMenu[jmob.BaseSkinName].Cast<CheckBox>().CurrentValue)
                         {
-                            var predhealth = Player.Instance.GetSummonerSpellDamage(jmob, DamageLibrary.SummonerSpells.Smite)
-                                             >= Prediction.Health.GetPrediction(jmob, Smite.CastDelay * 1000);
-                            var health = Player.Instance.GetSummonerSpellDamage(jmob, DamageLibrary.SummonerSpells.Smite) >= jmob.Health;
-
-                            if (predhealth || health)
+                            var predh = Helpers.SmiteDamage(jmob) >= Prediction.Health.GetPrediction(jmob, Smite.CastDelay * 1000);
+                            var hks = Helpers.SmiteDamage(jmob) >= jmob.TotalShieldHealth();
+                            if (predh || hks)
                             {
                                 Smite.Cast(jmob);
                             }
@@ -39,23 +42,54 @@
                     }
                 }
 
-                foreach (var target in
-                    EntityManager.Heroes.Enemies.Where(
-                        hero =>
-                        hero != null && hero.IsHPBarRendered && !hero.HasBuffOfType(BuffType.Invulnerability) && hero.IsValid && hero.IsVisible
-                        && hero.IsEnemy && !hero.IsDead && !hero.IsZombie && !SummMenu["DontSmite" + hero.BaseSkinName].Cast<CheckBox>().CurrentValue)
-                        .Where(target => target.IsValidTarget(Smite.Range)))
+                if (Player.Spells.FirstOrDefault(o => o.SData.Name.ToLower().Contains("summonersmiteduel")) == null)
                 {
-                    if (smitecombo)
+                    if (Smite.Handle.Ammo == 1 && SummMenu["smitesaveh"].Cast<CheckBox>().CurrentValue)
                     {
-                        Smite.Cast(target);
+                        return;
+                    }
+                    if (smiteks)
+                    {
+                        foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e.IsKillable()))
+                        {
+                            if (enemy != null && enemy.IsValidTarget(Smite.Range))
+                            {
+                                var predh = Helpers.SmiteDamage(enemy) >= Prediction.Health.GetPrediction(enemy, Smite.CastDelay * 1000);
+                                var hks = Helpers.SmiteDamage(enemy) >= enemy.TotalShieldHealth();
+                                if (predh || hks)
+                                {
+                                    Smite.Cast(enemy);
+                                }
+                            }
+                        }
                     }
 
-                    if (smiteks && target.IsKillable()
-                        && Player.Instance.GetSummonerSpellDamage(target, DamageLibrary.SummonerSpells.Smite) >= target.TotalShieldHealth())
+                    if (smitecombo)
                     {
-                        Smite.Cast(target);
+                        var target = TargetSelector.GetTarget(Smite.Range, DamageType.True);
+                        if (target != null && target.IsValidTarget(Smite.Range) && target.IsKillable())
+                        {
+                            Smite.Cast(target);
+                        }
                     }
+                }
+            }
+        }
+
+        public static void Orbwalker_OnPostAttack(AttackableUnit target, EventArgs args)
+        {
+            if (Smite.Handle.Ammo == 1 && SummMenu["smitesaveh"].Cast<CheckBox>().CurrentValue)
+            {
+                return;
+            }
+            var smitecombo = SummMenu["smitecombo"].Cast<CheckBox>().CurrentValue && Smite.IsReady()
+                             && Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo);
+            if (smitecombo && Player.Spells.FirstOrDefault(o => o.SData.Name.ToLower().Contains("summonersmiteduel")) != null)
+            {
+                var client = target as AIHeroClient;
+                if (client != null)
+                {
+                    Smite.Cast(client);
                 }
             }
         }

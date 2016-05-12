@@ -1,1 +1,1 @@
-C:\Users\MF-TR\Desktop\çeviriler\DN-Kappa\Malzahar\bin\Release\Malzahar.exe.config
+C:\Users\MF-TR\Desktop\çeviri\Malzahar\bin\Debug\Malzahar.exe.config

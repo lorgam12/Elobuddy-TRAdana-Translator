@@ -20,16 +20,16 @@ namespace LeeSin
         {
             var AddonName = Champion.AddonName;
             var Author = Champion.Author;
-            AddonMenu = MainMenu.AddMenu(AddonName, AddonName + " by " + Author + " v6.4.0-ceviri tradana iyi oyunlar");
+            AddonMenu = MainMenu.AddMenu(AddonName, AddonName + " by " + Author + " v6.4.0");
             AddonMenu.AddLabel(AddonName + " made by " + Author);
 
-            SubMenu["Prediction"] = AddonMenu.AddSubMenu("İsabet Oranı", "Prediction3");
+            SubMenu["Prediction"] = AddonMenu.AddSubMenu("Prediction", "Prediction3");
             SubMenu["Prediction"].AddGroupLabel("Q Ayarları");
             SubMenu["Prediction"].Add("QCombo", new Slider("Kombo İsabet Oranı", 65));
             SubMenu["Prediction"].Add("QHarass", new Slider("Dürtme İsabet Oranı", 70));
 
             //Combo
-            SubMenu["Combo"] = AddonMenu.AddSubMenu("Kombo", "Combo");
+            SubMenu["Combo"] = AddonMenu.AddSubMenu("Combo", "Combo");
             SubMenu["Combo"].Add("Q", new CheckBox("Kullan Q", true));
             SubMenu["Combo"].Add("W", new CheckBox("Kullan W to GapClose", true));
             SubMenu["Combo"].Add("E", new CheckBox("Kullan E", true));
@@ -51,7 +51,7 @@ namespace LeeSin
                     }
                 }
             };
-            SubMenu["Combo"].AddStringList("Mode", "Combo Modu", new[] { "Normal Combo", "Star Combo", "Gank Combo" }, 0);
+            SubMenu["Combo"].AddStringList("Mode", "Combo Mode", new[] { "Normal Combo", "Star Combo", "Gank Combo" }, 0);
             SubMenu["Combo"]["Mode"].Cast<Slider>().CurrentValue = 0; //E L I M I N A R
 
             SubMenu["Combo"].AddGroupLabel("Normal Combo");
@@ -74,7 +74,7 @@ namespace LeeSin
             SubMenu["Combo"].Add("Gank.R", new CheckBox("R Kullan", true));
             SubMenu["Combo"].Add("Gank.Ward", new CheckBox("Totem Kullan", true));
             SubMenu["Combo"].Add("Gank.Stack", new Slider("Pasiften önce diğer büyüleri Kullan", 1, 0, 2));
-            
+
             //Insec
             SubMenu["Insec"] = AddonMenu.AddSubMenu("Insec", "Insec");
             SubMenu["Insec"].Add("Key", new KeyBind("Insec Tuşu (Bu tuşu Kendine göre ayarlamalısın)", false, KeyBind.BindTypes.HoldActive, (uint)'R'));
@@ -89,8 +89,8 @@ namespace LeeSin
             SubMenu["Insec"].AddLabel("Dostlara ise dostu sol tıkla tıklıyacaksın.");
             SubMenu["Insec"].AddLabel("Hedef Düşmansa Hedefi sol tıkla belirliceksin");
             SubMenu["Insec"].AddLabel("To select a position just use left click on that position.");
-            
-            SubMenu["Harass"] = AddonMenu.AddSubMenu("Dürtme", "Harass");
+
+            SubMenu["Harass"] = AddonMenu.AddSubMenu("Harass", "Harass");
             SubMenu["Harass"].Add("Q", new CheckBox("Kullan Q", true));
             SubMenu["Harass"].Add("W", new CheckBox("Kullan W Kaçarken", true));
             SubMenu["Harass"].Add("E", new CheckBox("Kullan E", true));
@@ -101,14 +101,14 @@ namespace LeeSin
             SubMenu["Smite"].Add("Q.Insec", new CheckBox("Q ile insec yaparken çarp kullan", true));
             SubMenu["Smite"].Add("DragonSteal", new CheckBox("Çarp Kullan Baronda ve Ejderde", true));
             //SubMenu["Smite"].Add("KillSteal", new CheckBox("Use Smite to KillSteal", true));
-            
-            SubMenu["JungleClear"] = AddonMenu.AddSubMenu("Orman Temizleyici", "JungleClear");
+
+            SubMenu["JungleClear"] = AddonMenu.AddSubMenu("JungleClear", "JungleClear");
             SubMenu["JungleClear"].Add("Q", new CheckBox("Kullan Q", true));
             SubMenu["JungleClear"].Add("W", new CheckBox("Kullan W", true));
             SubMenu["JungleClear"].Add("E", new CheckBox("Kullan E", true));
             SubMenu["JungleClear"].Add("Smite", new CheckBox("Ejder Baronda Çarp Kullan", true));
 
-            SubMenu["KillSteal"] = AddonMenu.AddSubMenu("Kill Çalma", "KillSteal");
+            SubMenu["KillSteal"] = AddonMenu.AddSubMenu("KillSteal", "KillSteal");
             SubMenu["KillSteal"].Add("Ward", new CheckBox("Gapclose'da totem kullan", false));
             SubMenu["KillSteal"].Add("Q", new CheckBox("Kullan Q", false));
             SubMenu["KillSteal"].Add("W", new CheckBox("Gapclose'ta W Kullan", true));
@@ -117,7 +117,7 @@ namespace LeeSin
             SubMenu["KillSteal"].Add("Ignite", new CheckBox("Kullan Ignite", true));
             SubMenu["KillSteal"].Add("Smite", new CheckBox("Kullan Smite", true));
 
-            SubMenu["Drawings"] = AddonMenu.AddSubMenu("Göstergeler", "Drawings");
+            SubMenu["Drawings"] = AddonMenu.AddSubMenu("Drawings", "Drawings");
             SubMenu["Drawings"].Add("Disable", new CheckBox("Tüm Göstergeleri Kapat", false));
             SubMenu["Drawings"].Add("Q", new CheckBox("Göster Q Menzili", true));
             SubMenu["Drawings"].Add("W", new CheckBox("Göster W Menzili", true));
@@ -131,7 +131,7 @@ namespace LeeSin
             SubMenu["Flee"].Add("WardJump", new CheckBox("Kullan WardJump", true));
             SubMenu["Flee"].Add("W", new CheckBox("Mouse Yakınında W Kullan", true));
 
-            SubMenu["Misc"] = AddonMenu.AddSubMenu("Ek", "Misc");
+            SubMenu["Misc"] = AddonMenu.AddSubMenu("Misc", "Misc");
             SubMenu["Misc"].Add("Interrupter", new CheckBox("Use R to interrupt channeling spells", true));
             SubMenu["Misc"].Add("Overkill", new Slider("Overkill % for damage prediction", 10, 0, 100));
             SubMenu["Misc"].Add("R.Hit", new Slider("R kullan eğer şu kadar çarpacaksa >=", 3, 1, 5));

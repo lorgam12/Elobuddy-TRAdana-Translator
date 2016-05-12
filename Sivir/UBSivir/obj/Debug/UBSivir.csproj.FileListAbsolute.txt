@@ -1,1 +1,1 @@
-C:\Users\MF-TR\Desktop\çeviriler\UBSivir\bin\Debug\UBSivir.exe.config
+C:\Users\MF-TR\Desktop\çeviri\UBSivir\bin\Debug\UBSivir.exe.config

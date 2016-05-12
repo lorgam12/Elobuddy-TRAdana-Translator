@@ -44,7 +44,7 @@ namespace MaddeningJinx
             TapKey = Menu.Add("R.Tap.Key", new KeyBind("Otomatik R Kullan şu tuşla", false, EloBuddy.SDK.Menu.Values.KeyBind.BindTypes.HoldActive, 'T'));
             TapKey.OnValueChange += OnValueChange;
 
-            SubMenu["Combo"] = Menu.AddSubMenu("Kombo");
+            SubMenu["Combo"] = Menu.AddSubMenu("Combo");
             {
                 SubMenu["Combo"].Add("Q", new CheckBox("Roket Kullan (Akıllı)"));
                 SubMenu["Combo"].Add("Q.Aoe", new Slider("Roket Kullan isabet edecekse >= {0}", 2, 1, 5));
@@ -52,7 +52,7 @@ namespace MaddeningJinx
                 SubMenu["Combo"].Add("E", new CheckBox("E Kullan (Akıllı)"));
                 SubMenu["Combo"].Add("E.Aoe", new Slider("E Kullan isabet edecekse >= {0}", 3, 0, 5));
             }
-            SubMenu["Automatic"] = Menu.AddSubMenu("Otomatik");
+            SubMenu["Automatic"] = Menu.AddSubMenu("Automatic");
             {
                 SubMenu["Automatic"].Add("W.Spells", new CheckBox("Kaçan hedefe W kullan"));
                 SubMenu["Automatic"].Add("E.CC", new CheckBox("Use E on enemies with CC"));
@@ -90,14 +90,14 @@ namespace MaddeningJinx
                 }
             }
 
-            SubMenu["KillSteal"] = Menu.AddSubMenu("Kill Çalma");
+            SubMenu["KillSteal"] = Menu.AddSubMenu("KillSteal");
             {
                 SubMenu["KillSteal"].Add("Q", new CheckBox("Roket Kullan"));
                 SubMenu["KillSteal"].Add("W", new CheckBox("W Kullan"));
                 SubMenu["KillSteal"].Add("E", new CheckBox("E Kullan"));
                 SubMenu["KillSteal"].Add("R", new CheckBox("R Kullan (Sadece ölecek varsa)"));
             }
-            SubMenu["Clear"] = Menu.AddSubMenu("Temizleyici");
+            SubMenu["Clear"] = Menu.AddSubMenu("Clear");
             {
                 SubMenu["Clear"].AddGroupLabel("SonVuruş");
                 SubMenu["Clear"].Add("LastHit.Q", new Slider("Roket kullan .. isabet edecekse >= {0}", 2, 0, 10));
@@ -107,7 +107,7 @@ namespace MaddeningJinx
                 SubMenu["Clear"].Add("JungleClear.Q", new Slider("Roket kullan ..isabet edecekse >= {0}", 2, 0, 10));
             }
 
-            SubMenu["Drawings"] = Menu.AddSubMenu("Gösterge");
+            SubMenu["Drawings"] = Menu.AddSubMenu("Drawings");
             {
                 SubMenu["Drawings"].Add("Disable", new CheckBox("Tüm Göstergeleri Kapat", false));
                 SubMenu["Drawings"].Add("W", new CheckBox("Göster W Menzili"));

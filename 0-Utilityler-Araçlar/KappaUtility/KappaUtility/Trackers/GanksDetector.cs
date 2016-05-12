@@ -45,7 +45,7 @@
                 }
             }
 
-            GankMenu.AddGroupLabel("Düşmanlar:");
+            GankMenu.AddGroupLabel("Enemies:");
             foreach (var hero in ObjectManager.Get<AIHeroClient>())
             {
                 var cb = new CheckBox(hero.BaseSkinName) { CurrentValue = true };

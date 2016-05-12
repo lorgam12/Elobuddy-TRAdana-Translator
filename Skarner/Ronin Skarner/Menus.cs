@@ -112,19 +112,19 @@ namespace RoninSkarner
             JungleClearMenu.CreateSlider("Gereken mana", "manaSlider", 20);
             JungleClearMenu.AddLabel("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
 
-            //KillStealMenu.AddGroupLabel("KillÇalma");
-            //KillStealMenu.CreateCheckBox(" - Kullan Q", "qUse");
-            //KillStealMenu.CreateCheckBox(" - Kullan E", "eUse");
-            //KillStealMenu.AddGroupLabel("Ayarları");
-            //KillStealMenu.CreateSlider("Gereken mana", "manaSlider", 50);
+            //KillStealMenu.AddGroupLabel("KilLSteal");
+            //KillStealMenu.CreateCheckBox(" - Use Q", "qUse");
+            //KillStealMenu.CreateCheckBox(" - Use E", "eUse");
+            //KillStealMenu.AddGroupLabel("Settings");
+            //KillStealMenu.CreateSlider("Mana must be lower than [{0}%] to use Killsteal spells", "manaSlider", 50);
 
             MiscMenu.AddGroupLabel("Skin Değiştrici");
-            
+
             var skinList = Mario_s_Lib.DataBases.Skins.SkinsDB.FirstOrDefault(list => list.Champ == Player.Instance.Hero);
             if (skinList != null)
             {
                 MiscMenu.CreateComboBox("Skinini seç", "skinComboBox", skinList.Skins);
-                MiscMenu.Get<ComboBox>("skinComboBox").OnValueChange += delegate(ValueBase<int> sender, ValueBase<int>.ValueChangeArgs args)
+                MiscMenu.Get<ComboBox>("skinComboBox").OnValueChange += delegate (ValueBase<int> sender, ValueBase<int>.ValueChangeArgs args)
                 {
                     Player.Instance.SetSkinId(sender.CurrentValue);
                 };
@@ -134,9 +134,9 @@ namespace RoninSkarner
             MiscMenu.AddGroupLabel("Otomatik level arttırma");
             MiscMenu.CreateCheckBox("Aktif oto level", "activateAutoLVL", false);
             MiscMenu.AddLabel("Otomatik level her zaman R ye öncelik verir ondan sonrası aşağıda");
-            MiscMenu.CreateComboBox("1.ci büyü", "firstFocus", new List<string> {"Q", "W", "E"});
-            MiscMenu.CreateComboBox("2.ci büyü", "secondFocus", new List<string> {"Q", "W", "E"}, 1);
-            MiscMenu.CreateComboBox("3.cü büyü", "thirdFocus", new List<string> {"Q", "W", "E"}, 2);
+            MiscMenu.CreateComboBox("1.ci büyü", "firstFocus", new List<string> { "Q", "W", "E" });
+            MiscMenu.CreateComboBox("2.ci büyü", "secondFocus", new List<string> { "Q", "W", "E" }, 1);
+            MiscMenu.CreateComboBox("3.cü büyü", "thirdFocus", new List<string> { "Q", "W", "E" }, 2);
             MiscMenu.CreateSlider("Gecikme Ayarı", "delaySlider", 200, 150, 500);
 
             MiscMenu.AddLabel("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");

@@ -70,7 +70,7 @@ namespace UBKennen
                 LaneClear.Add("sep5", new Separator(40));
             }
             //JungleClear Menu
-            JungleClear = Menu.AddSubMenu("JungleClear");
+            JungleClear =Menu.AddSubMenu("JungleClear");
             {
                 JungleClear.AddGroupLabel("OrmanTemizleme Ayarları");
                 JungleClear.Add("useQJc", new CheckBox("Q Kullan"));

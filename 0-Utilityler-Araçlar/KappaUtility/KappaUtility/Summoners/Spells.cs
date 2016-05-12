@@ -8,11 +8,9 @@
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Rendering;
-
-    using Common;
-
     using EloBuddy.SDK.Enumerations;
-    using EloBuddy.SDK.Spells;
+
+    using KappaUtility.Common;
 
     using SharpDX;
 
@@ -30,10 +28,16 @@
 
         public static Spell.Skillshot porotoss;
 
-        public static readonly string[] Junglemobs =
+        public static readonly string[] SRJunglemobs =
             {
-                "SRU_Dragon_Air", "SRU_Dragon_Earth", "SRU_Dragon_Fire", "SRU_Dragon_Water", "SRU_Dragon_Elder", "SRU_Baron", "SRU_Gromp", "SRU_Krug", "SRU_Razorbeak", "Sru_Crab", "SRU_Murkwolf",
-                "SRU_Blue", "SRU_Red", "AscXerath"
+                "SRU_Dragon_Air", "SRU_Dragon_Earth", "SRU_Dragon_Fire", "SRU_Dragon_Water", "SRU_Dragon_Elder",
+                "SRU_Baron", "SRU_Gromp", "SRU_Krug", "SRU_Razorbeak", "SRU_RiftHerald", "Sru_Crab", "SRU_Murkwolf", "SRU_Blue",
+                "SRU_Red", "AscXerath"
+            };
+
+        public static readonly string[] TTJunglemobs =
+            {
+                "TT_NWraith", "TT_NWolf", "TT_NGolem", "TT_Spiderboss"
             };
 
         public static Menu SummMenu { get; private set; }
@@ -137,7 +141,8 @@
                 Exhaust = new Spell.Targeted(Player.Instance.GetSpellSlotFromName("SummonerExhaust"), 650);
             }
 
-            if (Player.Spells.FirstOrDefault(o => o.SData.Name.Contains("SummonerSmite")) != null)
+            var smitespell = Player.Spells.FirstOrDefault(o => o.SData.Name.ToLower().Contains("summonersmite"));
+            if (smitespell != null)
             {
                 SummMenu.AddGroupLabel("Çarp Ayarları");
                 SummMenu.Add(
@@ -146,11 +151,37 @@
                 SummMenu.Add(
                     Player.Instance.ChampionName + "EnableactiveSmite",
                     new KeyBind("Çarp Aktif", false, KeyBind.BindTypes.HoldActive));
-                SummMenu.Add("smitemob", new CheckBox("Çarp Canavalar", false));
-                SummMenu.Add("smitecombo", new CheckBox("Çarp Kombo", false));
+                SummMenu.Add("drawSmite", new CheckBox("Çarp menzilini göster", false));
+                SummMenu.AddSeparator(1);
+                SummMenu.AddGroupLabel("Ormanda Çarp:");
+                SummMenu.Add("smitemob", new CheckBox("canavarlara çarp", false));
+                SummMenu.Add("smitesavej", new CheckBox("1 Çarpı beklet", false));
+
+                if (Game.MapId == GameMapId.SummonersRift)
+                {
+                    SummMenu.AddLabel("Canavarlara çarp kullanma:");
+                    foreach (var mob in SRJunglemobs)
+                    {
+                        SummMenu.Add(mob, new CheckBox(mob));
+                    }
+                    SummMenu.AddSeparator();
+                }
+
+                if (Game.MapId == GameMapId.TwistedTreeline)
+                {
+                    SummMenu.AddLabel("Canavarlara çarp kullanma:");
+                    foreach (var mob in TTJunglemobs)
+                    {
+                        SummMenu.Add(mob, new CheckBox(mob));
+                    }
+                    SummMenu.AddSeparator(1);
+                }
+
+                SummMenu.AddGroupLabel("Kahramanlara Çarp:");
+                SummMenu.Add("smitecombo", new CheckBox("Komboda çarp", false));
                 SummMenu.Add("smiteks", new CheckBox("Çarp KillÇalma", false));
-                SummMenu.Add("drawSmite", new CheckBox("Göster Çarp Menzili", false));
-                SummMenu.AddGroupLabel("Çarp Kullanma:");
+                SummMenu.Add("smitesaveh", new CheckBox("1 Çarp yükü tut", false));
+                SummMenu.AddLabel("Çarp Kullanma:");
                 foreach (var enemy in ObjectManager.Get<AIHeroClient>())
                 {
                     var cb = new CheckBox(enemy.BaseSkinName) { CurrentValue = false };
@@ -160,27 +191,15 @@
                     }
                 }
 
-                SummMenu.AddGroupLabel("Canavalara çarp Kullan:");
-                foreach (var mob in Junglemobs)
-                {
-                    SummMenu.Add(mob, new CheckBox(mob));
-                }
-                SummMenu.AddSeparator();
-                if (Player.Instance.Spellbook.GetSpell(SpellSlot.Summoner1).Name.ToLower().Contains("summonersmite"))
-                {
-                    Smite = new Spell.Targeted(SpellSlot.Summoner1, 555);
-                }
-
-                if (Player.Instance.Spellbook.GetSpell(SpellSlot.Summoner2).Name.ToLower().Contains("summonersmite"))
-                {
-                    Smite = new Spell.Targeted(SpellSlot.Summoner2, 555);
-                }
+                Smite = new Spell.Targeted(smitespell.Slot, 555);
+                Orbwalker.OnPostAttack += Summoners.Smite.Orbwalker_OnPostAttack;
             }
 
-            if (Player.Spells.FirstOrDefault(o => o.SData.Name.Contains("SummonerPoroThrow")) != null)
+            if (Player.Spells.FirstOrDefault(o => o.SData.Name.Contains("SummonerPoroThrow")) != null
+                || Player.Spells.FirstOrDefault(o => o.SData.Name.ToLower().Contains("summonersnowball")) != null)
             {
                 SummMenu.AddGroupLabel("Poro(kartopu modu) Ayarları");
-                SummMenu.Add(Player.Instance.ChampionName + "EnablePoro", new KeyBind("Poro Tuşu", true, KeyBind.BindTypes.PressToggle, 'M'));
+                SummMenu.Add(Player.Instance.ChampionName + "EnablePoro", new KeyBind("Enable Poro Toggle", true, KeyBind.BindTypes.PressToggle, 'M'));
                 SummMenu.Add(
                     Player.Instance.ChampionName + "EnableactivePoro",
                     new KeyBind("Poro Aktif", false, KeyBind.BindTypes.HoldActive));
@@ -191,9 +210,21 @@
                     var cb = new CheckBox(enemy.BaseSkinName) { CurrentValue = false };
                     SummMenu.Add("Dontporo" + enemy.BaseSkinName, cb);
                 }
-
-                porotoss = new Spell.Skillshot(Player.Instance.GetSpellSlotFromName("SummonerPoroThrow"), 2250, SkillShotType.Linear, 50, 1000, 50)
-                               { AllowedCollisionCount = 0 };
+                if (Player.Spells.FirstOrDefault(o => o.SData.Name.Contains("SummonerPoroThrow")) != null)
+                {
+                    porotoss = new Spell.Skillshot(
+                        Player.Instance.GetSpellSlotFromName("SummonerPoroThrow"),
+                        2250,
+                        SkillShotType.Linear,
+                        50,
+                        1000,
+                        50) { AllowedCollisionCount = 0 };
+                }
+                if (Player.Spells.FirstOrDefault(o => o.SData.Name.Contains("SummonerSnowball")) != null)
+                {
+                    porotoss = new Spell.Skillshot(Player.Instance.GetSpellSlotFromName("SummonerSnowball"), 1600, SkillShotType.Linear, 50, 1000, 50)
+                                   { AllowedCollisionCount = 0 };
+                }
             }
             loaded = true;
         }
@@ -257,21 +288,21 @@
 
             var ally = ObjectManager.Get<AIHeroClient>().FirstOrDefault(a => a.IsValid && a.IsAlly && a.IsVisible);
 
-            if (porotoss != null && Player.Spells.FirstOrDefault(o => o.SData.Name.Contains("SummonerPoroThrow")) != null)
+            if (porotoss != null && !porotoss.Name.ToLower().Contains("snowballfollowupcast"))
             {
                 if (SummMenu[Player.Instance.ChampionName + "Enableactiveporo"].Cast<KeyBind>().CurrentValue
                     || SummMenu[Player.Instance.ChampionName + "Enableporo"].Cast<KeyBind>().CurrentValue)
                 {
-                    foreach (var pred in
-                        EntityManager.Heroes.Enemies.Where(e => e.IsValidTarget(porotoss.Range))
-                            .Where(
-                                enemy =>
-                                porotoss.IsReady() && enemy.IsValidTarget(porotoss.Range) && enemy != null
-                                && !SummMenu["Dontporo" + enemy.BaseSkinName].Cast<CheckBox>().CurrentValue)
-                            .Select(enemy => porotoss.GetPrediction(enemy))
-                            .Where(pred => pred.HitChance > HitChance.High))
+                    foreach (var enemy in EntityManager.Heroes.Enemies.Where(e => e.IsKillable() && e.IsValidTarget(porotoss.Range)))
                     {
-                        porotoss.Cast(pred.CastPosition);
+                        if (enemy != null)
+                        {
+                            var pred = porotoss.GetPrediction(enemy);
+                            if (pred.HitChance >= HitChance.High)
+                            {
+                                porotoss.Cast(pred.CastPosition);
+                            }
+                        }
                     }
                 }
             }
