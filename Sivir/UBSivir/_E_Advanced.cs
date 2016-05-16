@@ -19,24 +19,23 @@ namespace UBSivir
     {
         static _E_Advance()
         {
-            new Advance("Vladimir", "vladimirhemoplaguedebuff", SpellSlot.R).Add();
-            new Advance("Tristana", "tristanaechargesound", SpellSlot.E).Add();
-            new Advance("Karma", "karmaspiritbind", SpellSlot.W).Add();
-            new Advance("Karthus", "karthusfallenone", SpellSlot.R).Add();
-            new Advance("Leblanc", "leblancsoulshackle", SpellSlot.E).Add();
-            new Advance("Leblanc", "leblancsoulshackler", SpellSlot.R).Add();
-            new Advance("Morgana", "soulshackles", SpellSlot.R).Add();
-            new Advance("Zed", "zedultexecute", SpellSlot.R).Add();
-            new Advance("Fizz", "fizzmarinerdoombomb", SpellSlot.R).Add();
+            new Advance("Vladimir", "vladimirhemoplaguedebuff", SpellSlot.R, 4000).Add();
+            new Advance("Tristana", "tristanaechargesound", SpellSlot.E, 4000).Add();
+            new Advance("Karma", "karmaspiritbind", SpellSlot.W, 2000).Add();
+            new Advance("Karthus", "karthusfallenone", SpellSlot.R, 3000).Add();
+            new Advance("Leblanc", "leblancsoulshackle", SpellSlot.E, 1500).Add();
+            new Advance("Leblanc", "leblancsoulshackler", SpellSlot.R, 1500).Add();
+            new Advance("Morgana", "soulshackles", SpellSlot.R, 3000).Add();
+            new Advance("Zed", "zedultexecute", SpellSlot.R, 3000).Add();
+            new Advance("Fizz", "fizzmarinerdoombomb", SpellSlot.R, 1500).Add();
 
             foreach (var dispell in Advance.GetDispellList().Where(d => EntityManager.Heroes.Enemies.Any(h => h.ChampionName.Equals(d.ChampionName))))
             {
-                Config.ShieldMenu2.Add(dispell.ChampionName + dispell.BuffName, new CheckBox(dispell.ChampionName + " - " + dispell.Slot, true));
+                Config.ShieldMenu2.Add(dispell.ChampionName + dispell.Slot, new CheckBox(dispell.ChampionName + " - " + dispell.Slot, true));
             }
 
             Game.OnUpdate += OnUpdate;
         }
-
         static void OnUpdate(EventArgs args)
         {
             if (!Spells.E.IsReady() || !Config.ShieldMenu2["BlockChalleningE"].Cast<CheckBox>().CurrentValue)
@@ -45,17 +44,15 @@ namespace UBSivir
             foreach (var dispell in Dispells.Where(
                 d =>
                     Player.HasBuff(d.BuffName) &&
-                    Config.ShieldMenu2[d.ChampionName + d.BuffName] != null &&
-                    Config.ShieldMenu2[d.ChampionName + d.BuffName].Cast<CheckBox>().CurrentValue
+                    Config.ShieldMenu2[d.ChampionName + d.Slot] != null &&
+                    Config.ShieldMenu2[d.ChampionName + d.Slot].Cast<CheckBox>().CurrentValue
                 ))
             {
                 var buff = Player.GetBuff(dispell.BuffName);
                 if (buff == null || !buff.IsValid || !buff.IsActive)
                     continue;
-                var milisec = (buff.EndTime - Game.Time) * 1000f + dispell.Offset + 250;
-                var Emilisec = Spells.E.CastDelay + Game.Ping / 2f;
-
-                if (milisec < Emilisec)
+                var milisec = buff.EndTime - Game.Time;
+                if (milisec < 0.4f)
                 {
                     Spells.E.Cast();                  
                 }

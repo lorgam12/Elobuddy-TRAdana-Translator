@@ -38,7 +38,7 @@ namespace UBSivir
                 ComboMenu.Add("useRCombo", new CheckBox("Kullan R"));
                 ComboMenu.Add("RHitCombo", new Slider("Komboda R sana ve arkadaşlarına kaç kişide kullansın", 4, 1, 4));
                 ComboMenu.Add("sep", new Separator());
-                ComboMenu.AddLabel("Use spells");
+                ComboMenu.AddLabel("Büyüleri Kullan");
                 ComboMenu.Add("useheal", new CheckBox("Kullan Can"));
                 ComboMenu.Add("manageheal", new Slider("Eğer canım şundan azsa", 15, 1, 80));
                 ComboMenu.Add("usehealally", new CheckBox("Dostlara kullan"));
@@ -56,11 +56,11 @@ namespace UBSivir
             //Shield Menu2
             ShieldMenu2 = Menu.AddSubMenu("ShieldMenu2");
             {
-                ShieldMenu2.AddGroupLabel("Core Ayarları");
-                ShieldMenu2.Add("BlockChalleningE", new CheckBox("Akıllı E Kullan, değişken büyülere göre"));
+                ShieldMenu2.AddGroupLabel("Ek Ayarları");
+                ShieldMenu2.Add("BlockChalleningE", new CheckBox("Otomatik E kullan bazı büyülerden kaçmak için"));
                 ShieldMenu2.AddSeparator();
 
-                ShieldMenu2.AddGroupLabel("Düşman büyüleri engelleme");
+                ShieldMenu2.AddGroupLabel("Düşman büyüleri Engelleme");
             }
 
             //HarassMenu
@@ -68,9 +68,9 @@ namespace UBSivir
             {
                 HarassMenu.AddGroupLabel("Dürtme Ayarları");
                 HarassMenu.Add("useQHr", new CheckBox("Kullan Q"));
-                HarassMenu.Add("useQHr2", new CheckBox("Only use Q if no minion between"));
+                HarassMenu.Add("useQHr2", new CheckBox("Sadece minyon arkasında ise kullan Q"));
                 HarassMenu.Add("useWHr", new CheckBox("Kullan W"));
-                HarassMenu.Add("HrManage", new Slider("If mana percent below {0} stop harass", 50));
+                HarassMenu.Add("HrManage", new Slider("Eğer manam şundan azsa kullanma", 50));
             }
 
             //LaneClear Menu
