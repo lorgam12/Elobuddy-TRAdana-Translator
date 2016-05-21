@@ -88,7 +88,7 @@
                     }
                 };
 
-            LevelMenu.AddGroupLabel("Level Ayarlama");
+            LevelMenu.AddGroupLabel("Leveling Mode");
             LevelMenu.AddLabel("Q = 1 | W = 2 | E = 3 | R = 4");
 
             LoadPremadeMenu();

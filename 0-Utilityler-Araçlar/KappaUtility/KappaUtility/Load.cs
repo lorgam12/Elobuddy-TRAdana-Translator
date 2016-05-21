@@ -32,11 +32,11 @@
             UtliMenu = MainMenu.AddMenu("KappaUtility", "KappaUtility");
             UtliMenu.AddGroupLabel("Genel Ayarlar [Değiştirirsen F5 basman gerekir]");
             UtliMenu.Add("AutoLvlUp", new CheckBox("Aktif OtomatikLevel"));
-            UtliMenu.Add("AutoQSS", new CheckBox("Aktif AutoQSS(Arınma)"));
+            UtliMenu.Add("AutoQSS", new CheckBox("Aktif AutoQSS(Arınma"));
             UtliMenu.Add("AutoTear", new CheckBox("Aktif AutoTear"));
-            UtliMenu.Add("AutoReveal", new CheckBox("Aktif AutoReveal(Gizlenen görme)"));
-            UtliMenu.Add("GanksDetector", new CheckBox("Aktif GanksDetector(GangUyarıcı)"));
-            UtliMenu.Add("Tracker", new CheckBox("Aktif TakipEdici(Tracker)"));
+            UtliMenu.Add("AutoReveal", new CheckBox("Aktif AutoReveal(Gizlenen görme"));
+            UtliMenu.Add("GanksDetector", new CheckBox("Aktif GanksDetector(GangUyarıcı"));
+            UtliMenu.Add("Tracker", new CheckBox("Aktif TakipEdici(Tracker"));
             UtliMenu.Add("SkinHax", new CheckBox("Aktif SkinHilesi"));
             UtliMenu.Add("Spells", new CheckBox("Aktif SihirdarBüyüleri"));
             UtliMenu.Add("Potions", new CheckBox("Aktif İksirler"));
@@ -90,7 +90,7 @@
             {
                 Defensive.OnLoad();
             }
-            
+
             Game.OnTick += GameOnTick;
             Drawing.OnEndScene += OnEndScene;
             Drawing.OnDraw += DrawingOnDraw;

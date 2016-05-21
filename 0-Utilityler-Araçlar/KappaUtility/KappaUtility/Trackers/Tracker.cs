@@ -33,7 +33,7 @@
             TrackMenu = Load.UtliMenu.AddSubMenu("Tracker");
             TrackMenu.AddGroupLabel("Takip Etme Ayarları");
             TrackMenu.Add("Track", new CheckBox("Düşman durumunu takip et", false));
-            TrackMenu.Add("trackrecalls", new CheckBox("Düşmanı Takip Et(B atışını)", false));
+            TrackMenu.Add("trackrecalls", new CheckBox("Düşmanı Takip Et(B atışını", false));
             TrackMenu.Add("Tracktraps", new CheckBox("Tuzakları Takip et [BETA]", false));
             TrackMenu.Add("Trackping", new CheckBox("Ölecek hedefleri uyar(ping)", false));
             TrackMenu.Add("Trackway", new CheckBox("Düşman Noktalarını Göster", false));

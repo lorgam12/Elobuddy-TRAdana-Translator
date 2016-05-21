@@ -17,7 +17,7 @@
             {
                 SummMenu.AddGroupLabel("Flash Ayarları");
                 SummMenu.Add("extend", new CheckBox("Gelişmiş flash maks mesafe"));
-                SummMenu.Add("wall", new CheckBox("Duvara vuracaksa atma(duvardan atlayamıyacaksa diyor)"));
+                SummMenu.Add("wall", new CheckBox("Duvara vuracaksa atma(duvardan atlayamıyacaksa diyor"));
                 SummMenu.AddSeparator();
 
                 F = new Spell.Skillshot(Player.Instance.GetSpellSlotFromName("SummonerFlash"), 450, SkillShotType.Circular);
