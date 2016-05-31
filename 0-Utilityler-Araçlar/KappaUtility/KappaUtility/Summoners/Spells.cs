@@ -181,7 +181,7 @@
                 SummMenu.Add("EnableactivePoro", new KeyBind("Kartopu Aktif", false, KeyBind.BindTypes.HoldActive));
                 SummMenu.Add("drawporo", new CheckBox("Kartopu atma menzili", false));
                 SummMenu.Checkbox("drawporoStat", "Kartopu durumunu göster");
-                SummMenu.AddGroupLabel("Kartopu kullanma:");
+                SummMenu.AddGroupLabel("Kartopu durumunu göster:");
                 foreach (var enemy in EntityManager.Heroes.Enemies)
                 {
                     var cb = new CheckBox(enemy.BaseSkinName) { CurrentValue = false };
@@ -250,7 +250,7 @@
                         Circle.Draw(Heal.IsReady() ? Color.LightBlue : Color.Red, Heal.Range, pos);
                     }
 
-                    if (SummMenu["drawIgniteStat"].Cast<CheckBox>().CurrentValue)
+                    if (SummMenu["drawHealStat"].Cast<CheckBox>().CurrentValue)
                     {
                         Drawing.DrawText(posx, posy, c(Heal), "Heal" + ready(Heal), 2);
                     }
@@ -365,6 +365,95 @@
                     if (ally != null && ally.HealthPercent <= Exhaustally)
                     {
                         Exhaust.Cast(target);
+                    }
+                }
+            }
+        }
+
+        public static void summcast(Obj_AI_Base caster, Obj_AI_Base target, Obj_AI_Base enemy, float dmg)
+        {
+            var damagepercent = (dmg / target.TotalShieldHealth()) * 100;
+            var death = damagepercent >= target.HealthPercent || dmg >= target.TotalShieldHealth();
+            
+            if (target.IsMe)
+            {
+                if (Spells.Heal != null && !Spells.SummMenu["DontHeal" + target.BaseSkinName].Cast<CheckBox>().CurrentValue)
+                {
+                    var healc = (Spells.SummMenu["EnableactiveHeal"].Cast<KeyBind>().CurrentValue
+                                 || Spells.SummMenu["EnableHeal"].Cast<KeyBind>().CurrentValue) && Spells.Heal.IsReady();
+                    var healme = Spells.SummMenu["Healme"].Cast<Slider>().CurrentValue;
+                    if (healc)
+                    {
+                        if (target.HealthPercent <= healme || death)
+                        {
+                            Spells.Heal.Cast();
+                        }
+                    }
+                }
+
+                if (Spells.Exhaust != null)
+                {
+                    var exhaustc = (Spells.SummMenu["EnableactiveExhaust"].Cast<KeyBind>().CurrentValue
+                                    || Spells.SummMenu["EnableExhaust"].Cast<KeyBind>().CurrentValue) && Spells.Exhaust.IsReady();
+                    var Exhaustally = Spells.SummMenu["exhaustally"].Cast<Slider>().CurrentValue;
+                    var Exhaustenemy = Spells.SummMenu["exhaustenemy"].Cast<Slider>().CurrentValue;
+                    if (exhaustc && !Spells.SummMenu["DontExhaust" + caster.BaseSkinName].Cast<CheckBox>().CurrentValue)
+                    {
+                        if (target.HealthPercent <= Exhaustenemy || target.HealthPercent <= Exhaustally || death)
+                        {
+                            Spells.Exhaust.Cast(caster);
+                        }
+                    }
+                }
+
+                if (Spells.Barrier != null)
+                {
+                    var barrierc = (Spells.SummMenu["EnableactiveBarrier"].Cast<KeyBind>().CurrentValue
+                                    || Spells.SummMenu["EnableBarrier"].Cast<KeyBind>().CurrentValue) && Spells.Barrier.IsReady();
+                    var barrierme = Spells.SummMenu["barrierme"].Cast<Slider>().CurrentValue;
+                    if (barrierc)
+                    {
+                        if (target.HealthPercent <= barrierme || death)
+                        {
+                            Spells.Barrier.Cast();
+                        }
+                    }
+                }
+            }
+            if (target.IsAlly && !target.IsMe)
+            {
+                if (Spells.Exhaust != null)
+                {
+                    var exhaustc = (Spells.SummMenu["EnableactiveExhaust"].Cast<KeyBind>().CurrentValue
+                                    || Spells.SummMenu["EnableExhaust"].Cast<KeyBind>().CurrentValue) && Spells.Exhaust.IsReady();
+                    var Exhaustally = Spells.SummMenu["exhaustally"].Cast<Slider>().CurrentValue;
+                    var Exhaustenemy = Spells.SummMenu["exhaustenemy"].Cast<Slider>().CurrentValue;
+
+                    if (exhaustc
+                        && (target.IsValidTarget(Spells.Exhaust.Range)
+                            && !Spells.SummMenu["DontExhaust" + caster.BaseSkinName].Cast<CheckBox>().CurrentValue))
+                    {
+                        if (target.HealthPercent <= Exhaustenemy || target.HealthPercent <= Exhaustally || death)
+                        {
+                            Spells.Exhaust.Cast(caster);
+                        }
+                    }
+                }
+
+                if (Spells.Heal != null && !Spells.SummMenu["DontHeal" + target.BaseSkinName].Cast<CheckBox>().CurrentValue)
+                {
+                    var healc = (Spells.SummMenu["EnableactiveHeal"].Cast<KeyBind>().CurrentValue
+                                 || Spells.SummMenu["EnableHeal"].Cast<KeyBind>().CurrentValue) && Spells.Heal.IsReady();
+                    var healally = Spells.SummMenu["Healally"].Cast<Slider>().CurrentValue;
+                    if (healc)
+                    {
+                        if (target.IsInRange(Player.Instance, Spells.Heal.Range))
+                        {
+                            if (target.HealthPercent <= healally || death)
+                            {
+                                Spells.Heal.Cast();
+                            }
+                        }
                     }
                 }
             }

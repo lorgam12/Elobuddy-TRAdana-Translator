@@ -27,21 +27,21 @@
 
         public static Menu UtliMenu;
 
-        public static void Execute()
+        public static void Loading_OnLoadingComplete(EventArgs eventArgs)
         {
             UtliMenu = MainMenu.AddMenu("KappaUtility", "KappaUtility");
-            UtliMenu.AddGroupLabel("Genel Ayarlar [Değiştirirsen F5 basman gerekir]");
-            UtliMenu.Add("AutoLvlUp", new CheckBox("Aktif OtomatikLevel"));
-            UtliMenu.Add("AutoQSS", new CheckBox("Aktif AutoQSS(Arınma"));
-            UtliMenu.Add("AutoTear", new CheckBox("Aktif AutoTear"));
-            UtliMenu.Add("AutoReveal", new CheckBox("Aktif AutoReveal(Gizlenen görme"));
-            UtliMenu.Add("GanksDetector", new CheckBox("Aktif GanksDetector(GangUyarıcı"));
-            UtliMenu.Add("Tracker", new CheckBox("Aktif TakipEdici(Tracker"));
-            UtliMenu.Add("SkinHax", new CheckBox("Aktif SkinHilesi"));
-            UtliMenu.Add("Spells", new CheckBox("Aktif SihirdarBüyüleri"));
-            UtliMenu.Add("Potions", new CheckBox("Aktif İksirler"));
-            UtliMenu.Add("Offensive", new CheckBox("Aktif Saldırgan İtemler"));
-            UtliMenu.Add("Defensive", new CheckBox("Aktif Defansif İtemler"));
+            UtliMenu.AddGroupLabel("Global Settings [Must F5 To Take Effect]");
+            UtliMenu.Add("AutoLvlUp", new CheckBox("Enable AutoLvlUp"));
+            UtliMenu.Add("AutoQSS", new CheckBox("Enable AutoQSS"));
+            UtliMenu.Add("AutoTear", new CheckBox("Enable AutoTear"));
+            UtliMenu.Add("AutoReveal", new CheckBox("Enable AutoReveal"));
+            UtliMenu.Add("GanksDetector", new CheckBox("Enable GanksDetector"));
+            UtliMenu.Add("Tracker", new CheckBox("Enable Tracker"));
+            UtliMenu.Add("SkinHax", new CheckBox("Enable SkinHax"));
+            UtliMenu.Add("Spells", new CheckBox("Enable SummonerSpells"));
+            UtliMenu.Add("Potions", new CheckBox("Enable Potions"));
+            UtliMenu.Add("Offensive", new CheckBox("Enable Offensive Items"));
+            UtliMenu.Add("Defensive", new CheckBox("Enable Defensive Items"));
             if (UtliMenu["AutoLvlUp"].Cast<CheckBox>().CurrentValue)
             {
                 AutoLvlUp.OnLoad();
@@ -113,10 +113,6 @@
         {
             try
             {
-                if (loadedreveal)
-                {
-                    AutoReveal.Drawings();
-                }
                 if (loadedtrack)
                 {
                     Traps.Draw();
@@ -152,6 +148,7 @@
                 GanksDetector.OnUpdate();
                 Smite.Smiteopepi();
                 Spells.Cast();
+                AutoReveal.OnTick();
             }
             catch (Exception e)
             {

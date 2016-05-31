@@ -68,7 +68,7 @@
             loaded = true;
             LevelMenu.AddSeparator(0);
             LevelMenu.AddGroupLabel("Level Modu");
-            mode = LevelMenu.Add(Player.Instance.ChampionName + "switch", new ComboBox("SelectMode", 0, "Premade", "Custom"));
+            mode = LevelMenu.Add(Player.Instance.ChampionName + "switch", new ComboBox("Mod seç", 0, "Premade", "Custom"));
             mode.OnValueChange += delegate
                 {
                     switch (mode.Cast<ComboBox>().CurrentValue)

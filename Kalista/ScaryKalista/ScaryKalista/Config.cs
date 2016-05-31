@@ -74,7 +74,7 @@ namespace ScaryKalista
                 JungleMenu.Add("jungleclear.useE", new CheckBox("E ile mobları çal"));
                 JungleMenu.Add("jungleclear.miniE", new CheckBox("E ile küçük mobları çal", false));
             }
-            
+
             //Flee
             FleeMenu = Menu.AddSubMenu("Flee(kaç)");
             {
@@ -133,7 +133,7 @@ namespace ScaryKalista
                 ItemMenu.Add("item.sep", new Separator());
 
                 var bork = Items.BladeOfTheRuinedKing;
-                ItemMenu.Add("item." + bork.ItemInfo.Name, new CheckBox("Kullan "+ bork.ItemInfo.Name));
+                ItemMenu.Add("item." + bork.ItemInfo.Name, new CheckBox("Kullan " + bork.ItemInfo.Name));
                 ItemMenu.Add("item." + bork.ItemInfo.Name + "MyHp", new Slider("Senin canın şundan azsa {0}%", 80));
                 ItemMenu.Add("item." + bork.ItemInfo.Name + "EnemyHp", new Slider("Düşmanın cnaı şunda azsa {0}%", 80));
             }
@@ -143,9 +143,13 @@ namespace ScaryKalista
             {
                 BalistaMenu = Menu.AddSubMenu("Balista");
                 {
-                    BalistaMenu.Add("balista.comboOnly", new CheckBox("Sadece kombo modunda balista kullan(spacebasılı)"));
+                    BalistaMenu.Add("balista.use", new CheckBox("Use Balista"));
+
+                    BalistaMenu.Add("balista.sep1", new Separator());
+                    BalistaMenu.Add("balista.comboOnly", new CheckBox("Sadece kombo modunda balista kullan(spacebasılı"));
                     BalistaMenu.Add("balista.distance", new Slider("Blitzcharkla en az mesafem: {0}", 400, 0, 1200));
-                    BalistaMenu.Add("balista.sep", new Separator());
+
+                    BalistaMenu.Add("balista.sep2", new Separator());
                     BalistaMenu.Add("balista.label", new Label("Balista için:"));
                     foreach (var enemy in EntityManager.Heroes.Enemies)
                     {
@@ -155,7 +159,7 @@ namespace ScaryKalista
             }
 
             //Drawings
-            DrawMenu = Menu.AddSubMenu("Göstergeler");
+            DrawMenu = Menu.AddSubMenu("Drawings");
             {
                 DrawMenu.Add("draw.Q", new CheckBox("Göster Q Menzili"));
                 DrawMenu.Add("draw.W", new CheckBox("Göster W Menzili", false));
