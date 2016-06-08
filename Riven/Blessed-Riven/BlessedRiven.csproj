@@ -7,15 +7,15 @@
     <ProjectGuid>{EC91992E-F8E1-4C9D-A967-47A7B6BE5D6B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BlessedRiven</RootNamespace>
-    <AssemblyName>BlessedRiven</AssemblyName>
+    <RootNamespace>BlessedRiven_FIXED</RootNamespace>
+    <AssemblyName>BlessedRiven%28FIXED%29</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PlatformTarget>x86</PlatformTarget>
     <OutputPath>bin\Release</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -36,9 +36,6 @@
   <ItemGroup>
     <Reference Include="EloBuddy">
       <HintPath>C:\Users\Mertss\AppData\Roaming\EloBuddy\Addons\Libraries\EloBuddy.dll</HintPath>
-    </Reference>
-    <Reference Include="EloBuddy.Networking">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\EloBuddy\System\EloBuddy.Networking.dll</HintPath>
     </Reference>
     <Reference Include="EloBuddy.SDK">
       <HintPath>C:\Users\Mertss\AppData\Roaming\EloBuddy\Addons\Libraries\EloBuddy.SDK.dll</HintPath>

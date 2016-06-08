@@ -6,6 +6,11 @@ namespace Blessed_Riven
 {
     class Damage
     {
+        public static AIHeroClient _Player
+        {
+            get { return ObjectManager.Player; }
+        }
+
         public static double ComboDamage(Obj_AI_Base target, bool noR = false)
         {
             double dmg = 0;
@@ -29,27 +34,27 @@ namespace Blessed_Riven
                 : 0;
 
             dmg += PassiveDamage() * passiveStacks;
-            dmg += (Program.R.IsReady() && !noR && !Player.Instance.HasBuff("RivenFengShuiEngine")
-                ? Player.Instance.TotalAttackDamage * 1.2
-                : Player.Instance.TotalAttackDamage) * passiveStacks;
+            dmg += (Program.R.IsReady() && !noR && !_Player.HasBuff("RivenFengShuiEngine")
+                ? _Player.TotalAttackDamage * 1.2
+                : _Player.TotalAttackDamage) * passiveStacks;
 
             if (dmg < 10)
             {
-                return 3 * Player.Instance.TotalAttackDamage;
+                return 3 * _Player.TotalAttackDamage;
             }
 
             dmg += Program.R.IsReady() && !noR
-                ? RDamage(target, Player.Instance.CalculateDamageOnUnit(target, DamageType.Physical, (float)dmg))
+                ? RDamage(target, _Player.CalculateDamageOnUnit(target, DamageType.Physical, (float)dmg))
                 : 0;
-            return Player.Instance.CalculateDamageOnUnit(target, DamageType.Physical, (float)dmg);
+            return _Player.CalculateDamageOnUnit(target, DamageType.Physical, (float)dmg);
         }
 
         public static float QDamage(bool useR = false)
         {
             return (float)(new double[] { 10, 30, 50, 70, 90 }[Program.Q.Level - 1] +
-                            ((Program.R.IsReady() && useR && !Player.Instance.HasBuff("RivenFengShuiEngine")
-                                ? Player.Instance.TotalAttackDamage * 1.2
-                                : Player.Instance.TotalAttackDamage) / 100) *
+                            ((Program.R.IsReady() && useR && !_Player.HasBuff("RivenFengShuiEngine")
+                                ? _Player.TotalAttackDamage * 1.2
+                                : _Player.TotalAttackDamage) / 100) *
                             new double[] { 40, 45, 50, 55, 60 }[Program.Q.Level - 1]);
         }
 
@@ -70,20 +75,8 @@ namespace Blessed_Riven
             if (!Program.R.IsLearned) return 0;
             var hpPercent = (target.Health - healthMod > 0 ? 1 : target.Health - healthMod) / target.MaxHealth;
             return (float)((new double[] { 80, 120, 160 }[Program.R.Level - 1]
-                             + 0.6 * Player.Instance.FlatPhysicalDamageMod) *
+                             + 0.6 * _Player.FlatPhysicalDamageMod) *
                             (hpPercent < 25 ? 3 : (((100 - hpPercent) * 2.67) / 100) + 1));
-        }
-        public static float GetSmiteDamage()
-        {
-            float damage = new float();
-
-            if (Program._Player.Level < 10) damage = 360 + (Program._Player.Level - 1) * 30;
-
-            else if (Program._Player.Level < 15) damage = 280 + (Program._Player.Level - 1) * 40;
-
-            else if (Program._Player.Level < 19) damage = 150 + (Program._Player.Level - 1) * 50;
-
-            return damage;
         }
 
     }
