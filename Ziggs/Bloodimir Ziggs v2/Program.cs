@@ -19,7 +19,6 @@ namespace Bloodimir_Ziggs_v2
         public static Spell.Skillshot W;
         public static Spell.Skillshot E;
         public static Spell.Skillshot R;
-        private static Spell.Targeted _ignite;
         private static readonly AIHeroClient Ziggs = ObjectManager.Player;
         private static int _useSecondWTime;
 
@@ -62,42 +61,37 @@ namespace Bloodimir_Ziggs_v2
             W = new Spell.Skillshot(SpellSlot.W, 1000, SkillShotType.Circular, 250, 1750, 275);
             E = new Spell.Skillshot(SpellSlot.E, 900, SkillShotType.Circular, 500, 1750, 100);
             R = new Spell.Skillshot(SpellSlot.R, 5300, SkillShotType.Circular, 2000, 1500, 500);
-
-            if (HasSpell("summonerdot"))
-                _ignite = new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("summonerdot"), 600);
-
             ZiggsMenu = MainMenu.AddMenu("BloodimirZiggs", "bloodimirziggs");
-            ZiggsMenu.AddGroupLabel("Bloodimir Ziggs v2.0.2.0- çeviri tradana");
+            ZiggsMenu.AddGroupLabel("Bloodimir Ziggs v2.0.2.0");
             ZiggsMenu.AddSeparator();
             ZiggsMenu.AddLabel("Bloodimir Ziggs v2.0.2.0");
 
-            ComboMenu = ZiggsMenu.AddSubMenu("Kombo", "sbtw");
+            ComboMenu = ZiggsMenu.AddSubMenu("Combo", "sbtw");
             ComboMenu.AddGroupLabel("Kombo Ayarları");
             ComboMenu.AddSeparator();
             ComboMenu.Add("usecomboq", new CheckBox("Q Kullan"));
             ComboMenu.Add("usecomboe", new CheckBox("E Kullan"));
             ComboMenu.Add("usecombow", new CheckBox("W Kullan"));
             ComboMenu.Add("usecombor", new CheckBox("R Kullan"));
-            ComboMenu.Add("useignite", new CheckBox("Tutuştur Kullan"));
             ComboMenu.AddSeparator();
             ComboMenu.Add("rslider", new Slider("R için gerekli kişi sayısı", 1, 0, 5));
             ComboMenu.Add("wslider", new Slider("W için Düşmanın Canının Oranı", 15));
             ComboMenu.Add("waitAA", new CheckBox("AA tamamlanmasını bekle", false));
 
-            HarassMenu = ZiggsMenu.AddSubMenu("Dürtme", "Harass");
+            HarassMenu = ZiggsMenu.AddSubMenu("HarassMenu", "Harass");
             HarassMenu.Add("useQHarass", new CheckBox("Q Kullan"));
             HarassMenu.Add("waitAA", new CheckBox("AA tamamlanmasını bekle", false));
 
             LaneJungleClear = ZiggsMenu.AddSubMenu("Lane Jungle Clear", "lanejungleclear");
-            LaneJungleClear.AddGroupLabel("Lane Jungle Clear Ayarları");
+            LaneJungleClear.AddGroupLabel("Lane-OrmanTemizleme Ayarları");
             LaneJungleClear.Add("LCE", new CheckBox("E Kullan"));
             LaneJungleClear.Add("LCQ", new CheckBox("Q Kullan"));
 
             LastHitMenu = ZiggsMenu.AddSubMenu("Last Hit", "lasthit");
-            LastHitMenu.AddGroupLabel("Last Hit Ayarları");
+            LastHitMenu.AddGroupLabel("Son Vuruş Ayarları");
             LastHitMenu.Add("LHQ", new CheckBox("Q Kullan"));
 
-            DrawMenu = ZiggsMenu.AddSubMenu("Gösterge", "drawings");
+            DrawMenu = ZiggsMenu.AddSubMenu("Drawings", "drawings");
             DrawMenu.AddGroupLabel("Gösterge");
             DrawMenu.AddSeparator();
             DrawMenu.Add("drawq", new CheckBox("Göster Q"));
@@ -105,20 +99,20 @@ namespace Bloodimir_Ziggs_v2
             DrawMenu.Add("drawe", new CheckBox("Göster E"));
             DrawMenu.Add("drawaa", new CheckBox("Göster AA"));
 
-            MiscMenu = ZiggsMenu.AddSubMenu("Ek Menu", "miscmenu");
+            MiscMenu = ZiggsMenu.AddSubMenu("Misc Menu", "miscmenu");
             MiscMenu.AddGroupLabel("KS");
             MiscMenu.AddSeparator();
             MiscMenu.Add("ksq", new CheckBox("KS için Q"));
             MiscMenu.Add("int", new CheckBox("TRY to Interrupt spells"));
             MiscMenu.Add("gapw", new CheckBox("Anti Gapcloser W"));
-            MiscMenu.Add("peel", new CheckBox("Peel From Melees"));
+            MiscMenu.Add("peel", new CheckBox("Peel From Melees")); ;
 
-            FleeMenu = ZiggsMenu.AddSubMenu("Flee(Kaç)", "Flee");
-            FleeMenu.Add("fleew", new CheckBox("Wyi mouse'a göre kullan"));
+            FleeMenu = ZiggsMenu.AddSubMenu("Flee", "Flee");
+            FleeMenu.Add("fleew", new CheckBox("Kaçarken Wyi mouse'un olduğu yere doğru kullan"));
 
             PredMenu = ZiggsMenu.AddSubMenu("Prediction", "pred");
-            PredMenu.AddGroupLabel("Q Tutma Oranı");
-            var qslider = PredMenu.Add("hQ", new Slider("Q HitChance", 2, 0, 2));
+            PredMenu.AddGroupLabel("Q İsabet Oranı");
+            var qslider = PredMenu.Add("hQ", new Slider("Q İsabet Oranı", 2, 0, 2));
             var qMode = new[] {"Low (Fast Casting)", "Medium", "High (Slow Casting)"};
             qslider.DisplayName = qMode[qslider.CurrentValue];
 
@@ -127,8 +121,8 @@ namespace Bloodimir_Ziggs_v2
                 {
                     sender.DisplayName = qMode[changeArgs.NewValue];
                 };
-            PredMenu.AddGroupLabel("E Tutma Oranı");
-            var eslider = PredMenu.Add("hE", new Slider("E HitChance", 2, 0, 2));
+            PredMenu.AddGroupLabel("E İsabet Oranı");
+            var eslider = PredMenu.Add("hE", new Slider("E İsabet Oranı", 2, 0, 2));
             var eMode = new[] {"Low (Fast Casting)", "Medium", "High (Slow Casting)"};
             eslider.DisplayName = eMode[eslider.CurrentValue];
 
@@ -137,8 +131,8 @@ namespace Bloodimir_Ziggs_v2
                 {
                     sender.DisplayName = eMode[changeArgs.NewValue];
                 };
-            PredMenu.AddGroupLabel("W Tutma Oranı");
-            var wslider = PredMenu.Add("hW", new Slider("W HitChance", 1, 0, 2));
+            PredMenu.AddGroupLabel("W İsabet Oranı");
+            var wslider = PredMenu.Add("hW", new Slider("W İsabet Oranı", 1, 0, 2));
             var wMode = new[] {"Low (Fast Casting)", "Medium", "High (Slow Casting)"};
             wslider.DisplayName = wMode[wslider.CurrentValue];
 
@@ -147,7 +141,7 @@ namespace Bloodimir_Ziggs_v2
                 {
                     sender.DisplayName = wMode[changeArgs.NewValue];
                 };
-            SkinMenu = ZiggsMenu.AddSubMenu("Skin Değiştirici", "skin");
+            SkinMenu = ZiggsMenu.AddSubMenu("Skin Changer", "skin");
             SkinMenu.AddGroupLabel("İstediğiniz görünümü seçin");
 
             var skinchange = SkinMenu.Add("sID", new Slider("Skin", 4, 0, 5));
@@ -187,23 +181,6 @@ namespace Bloodimir_Ziggs_v2
                 LastHitA.LastHitB();
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Flee))
                 Flee();
-            {
-                {
-                    if (!ComboMenu["useignite"].Cast<CheckBox>().CurrentValue ||
-                        !Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) return;
-                    foreach (
-                        var source in
-                            ObjectManager.Get<AIHeroClient>()
-                                .Where(
-                                    a =>
-                                        a.IsEnemy && a.IsValidTarget(_ignite.Range) &&
-                                        a.Health < 50 + 20*Ziggs.Level - a.HPRegenRate/5*3))
-                    {
-                        _ignite.Cast(source);
-                        return;
-                    }
-                }
-            }
         }
 
         private static

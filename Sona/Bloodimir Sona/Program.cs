@@ -17,7 +17,6 @@ namespace Bloodimir_Sona
         public static Spell.Active W;
         public static Spell.Active E;
         public static Spell.Skillshot R;
-        public static Spell.Targeted Ignite;
         public static Spell.Targeted Exhaust;
         public static AIHeroClient Sona = ObjectManager.Player;
         public static Item FrostQueen;
@@ -57,22 +56,19 @@ namespace Bloodimir_Sona
             W = new Spell.Active(SpellSlot.W, 1000);
             E = new Spell.Active(SpellSlot.E, 350);
             R = new Spell.Skillshot(SpellSlot.R, 1000, SkillShotType.Circular, 250, 2400, 140);
-            if (HasSpell("summonerdot"))
-                Ignite = new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("summonerdot"), 600);
             FrostQueen = new Item(3092, 850f);
             Exhaust = new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("summonerexhaust"), 650);
 
             SonaMenu = MainMenu.AddMenu("BloodimirSona", "bloodimirsona");
-            SonaMenu.AddGroupLabel("Bloodimir Sona v1.0.0.0- çeviri tradana");
+            SonaMenu.AddGroupLabel("Bloodimir Sona v1.0.0.0");
             SonaMenu.AddSeparator();
             SonaMenu.AddLabel("Bloodimir Sona v1.0.0.0");
 
-            ComboMenu = SonaMenu.AddSubMenu("Kombo", "sbtw");
+            ComboMenu = SonaMenu.AddSubMenu("Combo", "sbtw");
             ComboMenu.AddGroupLabel("Kombo Ayarları");
             ComboMenu.AddSeparator();
             ComboMenu.Add("usecomboq", new CheckBox("Q Kullan"));
             ComboMenu.Add("usecombor", new CheckBox("R Kullan"));
-            ComboMenu.Add("useignite", new CheckBox("Tutuştur Kullan"));
             ComboMenu.Add("comboOnlyExhaust", new CheckBox("Use Exhaust (Combo Only)"));
             ComboMenu.Add("useitems", new CheckBox("İtemleri Kullan"));
             ComboMenu.AddSeparator();
@@ -96,25 +92,25 @@ namespace Bloodimir_Sona
             DrawMenu.Add("drawr", new CheckBox("Göster R"));
             DrawMenu.Add("drawaa", new CheckBox("Göster AA"));
 
-            MiscMenu = SonaMenu.AddSubMenu("Ek Menu", "miscmenu");
+            MiscMenu = SonaMenu.AddSubMenu("Misc Menu", "miscmenu");
             MiscMenu.AddGroupLabel("Ek");
             MiscMenu.AddSeparator();
             MiscMenu.Add("ks", new CheckBox("KS"));
-            MiscMenu.Add("int", new CheckBox("TRY to Interrupt spells"));
+            MiscMenu.Add("int", new CheckBox("Interrupt Büyüleri"));
             MiscMenu.Add("support", new CheckBox("Destek Modu", false));
             MiscMenu.Add("HPLowAllies", new CheckBox("W kullan % Dostların canı şu kadar", false));
             MiscMenu.Add("wslider", new Slider("W kullanmak için dostların canları şundan az", 60));
-            MiscMenu.Add("useexhaust", new CheckBox("Use Exhaust"));
+            MiscMenu.Add("useexhaust", new CheckBox("Bitkinlik Kullan"));
             foreach (var source in ObjectManager.Get<AIHeroClient>().Where(a => a.IsEnemy))
             {
                 MiscMenu.Add(source.ChampionName + "exhaust",
-                    new CheckBox("Exhaust " + source.ChampionName, false));
+                    new CheckBox("Bitkinlik " + source.ChampionName, false));
             }
 
             FleeMenu = SonaMenu.AddSubMenu("Flee", "Flee");
-            FleeMenu.Add("fleee", new CheckBox("Use E"));
+            FleeMenu.Add("fleee", new CheckBox("Kullan E"));
 
-            SkinMenu = SonaMenu.AddSubMenu("Skin Değiştirici", "skin");
+            SkinMenu = SonaMenu.AddSubMenu("Skin Changer", "skin");
             SkinMenu.AddGroupLabel("İstediğiniz Görünümü Seçin");
 
             var skinchange = SkinMenu.Add("sID", new Slider("Skin", 3, 0, 5));
@@ -153,18 +149,6 @@ namespace Bloodimir_Sona
                 else if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Flee))
                     Flee();
                 {
-                    {
-                        if (!ComboMenu["useignite"].Cast<CheckBox>().CurrentValue ||
-                            !Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) return;
-                        foreach (
-                            var source in
-                                ObjectManager.Get<AIHeroClient>()
-                                    .Where(
-                                        a =>
-                                            a.IsEnemy && a.IsValidTarget(Ignite.Range) &&
-                                            a.Health < 50 + 20*Sona.Level - (a.HPRegenRate/5*3)))
-                        {
-                            Ignite.Cast(source);
                             if (!MiscMenu["useexhaust"].Cast<CheckBox>().CurrentValue ||
                                 ComboMenu["comboOnlyExhaust"].Cast<CheckBox>().CurrentValue &&
                                 !Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo))
@@ -186,12 +170,9 @@ namespace Bloodimir_Sona
                                 if (!(enemy.HealthPercent < 50)) continue;
                                 Exhaust.Cast(enemy);
                                 return;
-                            }
+                            } } }
                         }
-                    }
-                }
-            }
-        }
+                    
 
         private static
             void Interruptererer

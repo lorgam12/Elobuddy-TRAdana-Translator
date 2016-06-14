@@ -17,7 +17,6 @@ namespace Bloodimir_Tryndamere
         public static Spell.Active W;
         public static Spell.Skillshot E;
         private static Spell.Active R;
-        private static Spell.Targeted _ignite;
         private static Menu _trynMenu;
         public static Menu ComboMenu;
         private static Menu _drawMenu;
@@ -50,9 +49,6 @@ namespace Bloodimir_Tryndamere
             W = new Spell.Active(SpellSlot.W, 400);
             E = new Spell.Skillshot(SpellSlot.E, 660, SkillShotType.Linear, 250, 700, (int) 92.5);
             R = new Spell.Active(SpellSlot.R);
-            if (HasSpell("summonerdot"))
-                _ignite = new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("summonerdot"), 600);
-
             Botrk = new Item(3153, 550f);
             Bilgewater = new Item(3144, 475f);
             Hydra = new Item(3074, 250f);
@@ -64,30 +60,29 @@ namespace Bloodimir_Tryndamere
             _trynMenu.AddSeparator();
             _trynMenu.AddLabel("Bloodimir Tryndamere V1.0.0.0");
 
-            ComboMenu = _trynMenu.AddSubMenu("Kombo", "sbtw");
+            ComboMenu = _trynMenu.AddSubMenu("Combo", "sbtw");
             ComboMenu.AddGroupLabel("Kombo Ayaları");
             ComboMenu.AddSeparator();
             ComboMenu.Add("usecomboq", new CheckBox("Q Kullan"));
             ComboMenu.Add("usecombow", new CheckBox("W Kullan"));
             ComboMenu.Add("usecomboe", new CheckBox("E Kullan"));
             ComboMenu.Add("usecombor", new CheckBox("R Kullan"));
-            ComboMenu.Add("useignite", new CheckBox("Tutuştur Kullan"));
             ComboMenu.AddSeparator();
             ComboMenu.Add("rslider", new Slider("Can % şundan azsa  Ulti Kullan ", 20, 0, 95));
             ComboMenu.AddSeparator();
             ComboMenu.Add("qhp", new Slider("Q % HP", 25, 0, 95));
 
 
-            _drawMenu = _trynMenu.AddSubMenu("Gösterge", "drawings");
+            _drawMenu = _trynMenu.AddSubMenu("Drawings", "drawings");
             _drawMenu.AddGroupLabel("Gösterge");
             _drawMenu.AddSeparator();
             _drawMenu.Add("drawe", new CheckBox("Göster E"));
 
             LaneJungleClear = _trynMenu.AddSubMenu("Lane Jungle Clear", "lanejungleclear");
-            LaneJungleClear.AddGroupLabel("Lane Jungle Clear Ayarları");
-            LaneJungleClear.Add("LCE", new CheckBox("E Kullan"));
+            LaneJungleClear.AddGroupLabel("Lane Jungle Clear Settings");
+            LaneJungleClear.Add("LCE", new CheckBox("Use E"));
 
-            MiscMenu = _trynMenu.AddSubMenu("Ek Menu", "miscmenu");
+            MiscMenu = _trynMenu.AddSubMenu("Misc Menu", "miscmenu");
             MiscMenu.AddGroupLabel("Ek");
             MiscMenu.AddSeparator();
             MiscMenu.Add("kse", new CheckBox("KS için E Kullan"));
@@ -100,7 +95,7 @@ namespace Bloodimir_Tryndamere
             MiscMenu.Add("useyoumuu", new CheckBox("Kullan Youmuu"));
 
 
-            _skinMenu = _trynMenu.AddSubMenu("Skin Değiştirici", "skin");
+            _skinMenu = _trynMenu.AddSubMenu("Skin Changer", "skin");
             _skinMenu.AddGroupLabel("İstediğiniz Görünümü Seçin");
 
             var skinchange = _skinMenu.Add("skinid", new Slider("Skin", 4, 0, 7));
@@ -178,21 +173,7 @@ namespace Bloodimir_Tryndamere
                     LaneJungleClearA.LaneClearA();
                 }
                 AutoUlt(ComboMenu["usecombor"].Cast<CheckBox>().CurrentValue);
-            }
-            if (!ComboMenu["useignite"].Cast<CheckBox>().CurrentValue ||
-                !Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) return;
-            foreach (
-                var source in
-                    ObjectManager.Get<AIHeroClient>()
-                        .Where(
-                            a =>
-                                a.IsEnemy && a.IsValidTarget(_ignite.Range) &&
-                                a.Health < 50 + 20*Tryndamere.Level - (a.HPRegenRate/5*3)))
-            {
-                _ignite.Cast(source);
-                return;
-            }
-        }
+            } }
 
         private static void Killsteal()
         {

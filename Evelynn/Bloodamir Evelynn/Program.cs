@@ -44,18 +44,17 @@ namespace Evelynn
             _eveMenu.AddSeparator();
             _eveMenu.AddLabel("Bloodimir Evelynn V1.0.1.0 - çeviri tradana");
 
-            ComboMenu = _eveMenu.AddSubMenu("Kombo", "sbtw");
+            ComboMenu = _eveMenu.AddSubMenu("Combo", "sbtw");
             ComboMenu.AddGroupLabel("Kombo Ayarları");
             ComboMenu.AddSeparator();
             ComboMenu.Add("usecomboq", new CheckBox("Q Kullan"));
             ComboMenu.Add("usecombow", new CheckBox("W Kullan"));
             ComboMenu.Add("usecomboe", new CheckBox("E Kullan"));
             ComboMenu.Add("usecombor", new CheckBox("R Kullan"));
-            ComboMenu.Add("useignite", new CheckBox("Tutuştur Kullan"));
             ComboMenu.AddSeparator();
-            ComboMenu.Add("rslider", new Slider("R için gerekli kişi sayısı", 1, 0, 5));
+            ComboMenu.Add("rslider", new Slider("Minimum people for R", 1, 0, 5));
 
-            _drawMenu = _eveMenu.AddSubMenu("Gösterge", "drawings");
+            _drawMenu = _eveMenu.AddSubMenu("Drawings", "drawings");
             _drawMenu.AddGroupLabel("Gösterge");
             _drawMenu.AddSeparator();
             _drawMenu.Add("drawq", new CheckBox("Göster Q"));
@@ -71,7 +70,7 @@ namespace Evelynn
             LastHitMenu.AddGroupLabel("Last Hit Ayarları");
             LastHitMenu.Add("LHQ", new CheckBox("Q Kullan"));
 
-            _miscMenu = _eveMenu.AddSubMenu("Ek Menu", "miscmenu");
+            _miscMenu = _eveMenu.AddSubMenu("Misc Menu", "miscmenu");
             _miscMenu.AddGroupLabel("KS");
             _miscMenu.AddSeparator();
             _miscMenu.Add("kse", new CheckBox("KS için E"));
@@ -79,7 +78,7 @@ namespace Evelynn
             _miscMenu.Add("ksq", new CheckBox("KS için Q"));
             _miscMenu.Add("asw", new CheckBox("Otomatik W"));
 
-            _skinMenu = _eveMenu.AddSubMenu("Skin değiştirici", "skin");
+            _skinMenu = _eveMenu.AddSubMenu("Skin Changer", "skin");
             _skinMenu.AddGroupLabel("İstediğiniz Görünümü Seçin");
 
             var skinchange = _skinMenu.Add("sID", new Slider("Skin", 2, 0, 4));

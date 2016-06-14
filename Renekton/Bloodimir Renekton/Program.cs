@@ -56,8 +56,6 @@ namespace Bloodimir_Renekton
             Q = new Spell.Active(SpellSlot.Q, 225);
             W = new Spell.Active(SpellSlot.W);
             E = new Spell.Skillshot(SpellSlot.E, 450, SkillShotType.Linear);
-            if (HasSpell("summonerdot"))
-                _ignite = new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("summonerdot"), 600);
             _r = new Spell.Active(SpellSlot.R);
             Tiamat = new Item((int) ItemId.Tiamat_Melee_Only, 420);
             Hydra = new Item((int) ItemId.Ravenous_Hydra_Melee_Only, 420);
@@ -67,21 +65,20 @@ namespace Bloodimir_Renekton
             _abilitySequence = new[] {2, 1, 3, 1, 1, 4, 1, 3, 1, 3, 4, 3, 3, 2, 2, 4, 2, 2};
 
             _renekMenu = MainMenu.AddMenu("BloodimiRenekton", "bloodimirrenekton");
-            _renekMenu.AddGroupLabel("Bloodimir.enekton çeviri tradana");
+            _renekMenu.AddGroupLabel("Bloodimir.enekton");
             _renekMenu.AddSeparator();
             _renekMenu.AddLabel("BloodimiRenekton v1.0.1.0");
 
-            ComboMenu = _renekMenu.AddSubMenu("Kombo", "sbtw");
+            ComboMenu = _renekMenu.AddSubMenu("Combo", "sbtw");
             ComboMenu.AddGroupLabel("Kombo Ayarları");
             ComboMenu.AddSeparator();
             ComboMenu.Add("usecomboq", new CheckBox("Q Kullan"));
             ComboMenu.Add("usecombow", new CheckBox("W Kullan"));
             ComboMenu.Add("usecomboe", new CheckBox("E Kullan"));
-            ComboMenu.Add("useignite", new CheckBox("Tutuştur Kullan"));
             ComboMenu.Add("useitems", new CheckBox("İtemleri Kullan"));
             ComboMenu.Add("autoult", new CheckBox("Otomatik Ulti"));
             ComboMenu.AddSeparator();
-            ComboMenu.Add("rslider", new Slider("Health Percentage to Ult", 31));
+            ComboMenu.Add("rslider", new Slider("Ulti için gereken canım", 31));
 
             LaneJungleClear = _renekMenu.AddSubMenu("Lane Jungle Clear", "lanejungleclear");
             LaneJungleClear.AddGroupLabel("Lane Jungle Clear Ayarları");
@@ -97,18 +94,18 @@ namespace Bloodimir_Renekton
             _drawMenu.Add("drawe", new CheckBox("Göster E"));
 
             LastHit = _renekMenu.AddSubMenu("Last Hit", "lasthit");
-            LastHit.AddGroupLabel("Last Hit Settings");
+            LastHit.AddGroupLabel("Son Vuruş Ayarları");
             LastHit.Add("LHQ", new CheckBox("Q Kullan"));
             LastHit.Add("LHW", new CheckBox("W Kullan"));
             LastHit.Add("LHI", new CheckBox("İtemleri Kullan"));
 
-            _harassMenu = _renekMenu.AddSubMenu("Dürtme Menu", "harass");
+            _harassMenu = _renekMenu.AddSubMenu("Harass Menu", "harass");
             _harassMenu.AddGroupLabel("Dürtme Ayarları");
-            _harassMenu.Add("hq", new CheckBox("Q Kullan"));
-            _harassMenu.Add("hw", new CheckBox("W Kullan"));
-            _harassMenu.Add("hi", new CheckBox("Dürtme İtemleri"));
+            _harassMenu.Add("hq", new CheckBox("Dürt Q"));
+            _harassMenu.Add("hw", new CheckBox("Dürt W"));
+            _harassMenu.Add("hi", new CheckBox("İtemlerle Dürtme"));
 
-            _miscMenu = _renekMenu.AddSubMenu("Ek Menu", "miscmenu");
+            _miscMenu = _renekMenu.AddSubMenu("Misc Menu", "miscmenu");
             _miscMenu.AddGroupLabel("KS");
             _miscMenu.AddSeparator();
             _miscMenu.Add("ksq", new CheckBox("KS için Q kullan"));
@@ -118,7 +115,7 @@ namespace Bloodimir_Renekton
             _miscMenu.Add("gapclose", new CheckBox("W to Interrupt"));
             _miscMenu.Add("lvlup", new CheckBox("Büyüleri Otomatik Ver", false));
 
-            _skinMenu = _renekMenu.AddSubMenu("Skin Değiştirici", "skin");
+            _skinMenu = _renekMenu.AddSubMenu("Skin Changer", "skin");
             _skinMenu.AddGroupLabel("İstediğin Görünümü Seç");
 
             var skinchange = _skinMenu.Add("sid", new Slider("Skin", 5, 0, 7));
@@ -223,21 +220,6 @@ namespace Bloodimir_Renekton
                 {
                     LastHitA.LastHitB();
                     LastHitA.Items();
-                }
-                {
-                    if (!ComboMenu["useignite"].Cast<CheckBox>().CurrentValue ||
-                        !Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) return;
-                    foreach (
-                        var source in
-                            ObjectManager.Get<AIHeroClient>()
-                                .Where(
-                                    a =>
-                                        a.IsEnemy && a.IsValidTarget(_ignite.Range) &&
-                                        a.Health < 50 + 20*Renek.Level - (a.HPRegenRate/5*3)))
-                    {
-                        _ignite.Cast(source);
-                        return;
-                    }
                 }
             }
         }

@@ -16,7 +16,7 @@ namespace Bloodimir_Shen
     internal static class Program
     {
         private static readonly AIHeroClient Shen = ObjectManager.Player;
-        public static Spell.Targeted R, Ignite, Exhaust;
+        public static Spell.Targeted R, Exhaust;
         public static Spell.Active W;
         public static Spell.Skillshot E, Q;
         public static Spell.Skillshot Flash;
@@ -69,9 +69,6 @@ namespace Bloodimir_Shen
             W = new Spell.Active(SpellSlot.W);
             E = new Spell.Skillshot(SpellSlot.E, 610, SkillShotType.Linear, 500, 1600, 50);
             R = new Spell.Targeted(SpellSlot.R, 31000);
-
-            if (HasSpell("summonerdot"))
-                Ignite = new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("summonerdot"), 600);
             Exhaust = new Spell.Targeted(ObjectManager.Player.GetSpellSlotFromName("summonerexhaust"), 650);
             var flashSlot = Shen.GetSpellSlotFromName("summonerflash");
             Flash = new Spell.Skillshot(flashSlot, 32767, SkillShotType.Linear);
@@ -81,15 +78,14 @@ namespace Bloodimir_Shen
             ShenMenu = MainMenu.AddMenu("BloodimirShen", "bloodimirshen");
             ShenMenu.AddGroupLabel("Bloodimir Shen");
             ShenMenu.AddSeparator();
-            ShenMenu.AddLabel("Bloodimir Shen Reworked v2.0.1.1 - çeviri tradana");
+            ShenMenu.AddLabel("Bloodimir Shen Reworked v2.0.1.1");
 
-            _comboMenu = ShenMenu.AddSubMenu("Kombo", "sbtw");
+            _comboMenu = ShenMenu.AddSubMenu("Combo", "sbtw");
             _comboMenu.AddGroupLabel("Kombo Ayarları");
             _comboMenu.AddSeparator();
             _comboMenu.Add("usecomboq", new CheckBox("Q Kullan"));
             _comboMenu.Add("autow", new CheckBox("Otomatik W"));
             _comboMenu.Add("usecomboe", new CheckBox("E Kullan"));
-            _comboMenu.Add("useignite", new CheckBox("Tutuşturu Otomatik Kullan"));
 
             _skinMenu = ShenMenu.AddSubMenu("Skin Değiştirici", "skin");
             _skinMenu.AddGroupLabel("İstediğin Görünümü Seç");
@@ -107,13 +103,13 @@ namespace Bloodimir_Shen
                 };
 
             _eMenu = ShenMenu.AddSubMenu("Taunt", "etaunt");
-            _eMenu.AddGroupLabel("E Settings");
-            _eMenu.Add("eslider", new Slider("Minimum Enemy to Taunt", 1, 0, 5));
-            _eMenu.Add("fleee", new CheckBox("Use E Flee"));
+            _eMenu.AddGroupLabel("E Ayarları");
+            _eMenu.Add("eslider", new Slider("E için en az hedef", 1, 0, 5));
+            _eMenu.Add("fleee", new CheckBox("Kaçarken E Kullan"));
             _eMenu.AddSeparator();
             foreach (var obj in ObjectManager.Get<AIHeroClient>().Where(obj => obj.Team != Shen.Team))
             {
-                _eMenu.Add("taunt" + obj.ChampionName.ToLower(), new CheckBox("Taunt " + obj.ChampionName));
+                _eMenu.Add("taunt" + obj.ChampionName.ToLower(), new CheckBox("Alay et " + obj.ChampionName));
             }
             _eMenu.Add("flashe", new KeyBind("Flash E", false, KeyBind.BindTypes.HoldActive, 'Y'));
             _eMenu.Add("e", new KeyBind("E", false, KeyBind.BindTypes.HoldActive, 'E'));
@@ -121,8 +117,8 @@ namespace Bloodimir_Shen
             _ultMenu = ShenMenu.AddSubMenu("ULT", "ultmenu");
             _ultMenu.AddGroupLabel("ULT");
             _ultMenu.AddSeparator();
-            _ultMenu.Add("autoult", new CheckBox("Auto Ult on Key Press"));
-            _ultMenu.Add("rslider", new Slider("Health Percent for Ult", 20));
+            _ultMenu.Add("autoult", new CheckBox("Otomatik Ulti Kullanma Tuşu"));
+            _ultMenu.Add("rslider", new Slider("Ulti kullanmak için gereken can yüzde", 20));
             _ultMenu.AddSeparator();
             _ultMenu.Add("ult", new KeyBind("ULT", false, KeyBind.BindTypes.HoldActive, 'R'));
             _ultMenu.AddSeparator();
@@ -132,30 +128,30 @@ namespace Bloodimir_Shen
             }
 
             MiscMenu = ShenMenu.AddSubMenu("Misc", "misc");
-            MiscMenu.AddGroupLabel("Misc");
+            MiscMenu.AddGroupLabel("Ek");
             MiscMenu.AddSeparator();
-            MiscMenu.Add("LCQ", new CheckBox("Smart LaneClear"));
-            MiscMenu.Add("inte", new CheckBox("Interrupt Spells"));
-            MiscMenu.Add("TUT", new CheckBox("Auto Taunt Under Turret"));
+            MiscMenu.Add("LCQ", new CheckBox("Akıllı Lanetemizleme"));
+            MiscMenu.Add("inte", new CheckBox("Interrupt Büyüleri"));
+            MiscMenu.Add("TUT", new CheckBox("Kule Altında otomatik tut"));
             MiscMenu.AddSeparator();
-            MiscMenu.Add("support", new CheckBox("Support Mode", false));
-            MiscMenu.Add("useexhaust", new CheckBox("Use Exhaust"));
-            MiscMenu.Add("randuin", new CheckBox("Use Randuin"));
-            MiscMenu.Add("lvlup", new CheckBox("Auto Level Up Spells", false));
+            MiscMenu.Add("support", new CheckBox("Support Modu", false));
+            MiscMenu.Add("useexhaust", new CheckBox("Bitkinlik Kullan"));
+            MiscMenu.Add("randuin", new CheckBox("Kullan Randuin"));
+            MiscMenu.Add("lvlup", new CheckBox("Otomatik Büyü Yükseltme", false));
             MiscMenu.AddSeparator();
             foreach (var source in ObjectManager.Get<AIHeroClient>().Where(a => a.IsEnemy))
             {
                 MiscMenu.Add(source.ChampionName + "exhaust",
-                    new CheckBox("Exhaust " + source.ChampionName, false));
+                    new CheckBox("Bitkinlik Kullanılacak şampiyonlar " + source.ChampionName, false));
             }
 
 
             DrawMenu = ShenMenu.AddSubMenu("Drawings", "drawings");
-            DrawMenu.AddGroupLabel("Drawings");
+            DrawMenu.AddGroupLabel("Göstergeler");
             DrawMenu.AddSeparator();
-            DrawMenu.Add("drawb", new CheckBox("Draw Blade"));
-            DrawMenu.Add("drawe", new CheckBox("Draw E"));
-            DrawMenu.Add("drawfe", new CheckBox("Draw FlashE"));
+            DrawMenu.Add("drawb", new CheckBox("Göster Kılıç"));
+            DrawMenu.Add("drawe", new CheckBox("Göster E"));
+            DrawMenu.Add("drawfe", new CheckBox("Göster FlashE"));
 
 
             Interrupter.OnInterruptableSpell += Interrupter_OnInterruptableSpell;
@@ -248,19 +244,6 @@ namespace Bloodimir_Shen
             if (_ultMenu["ult"].Cast<KeyBind>().CurrentValue)
             {
                 Ult();
-            }
-            if (!_comboMenu["useignite"].Cast<CheckBox>().CurrentValue ||
-                !Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo)) return;
-            foreach (
-                var source in
-                    ObjectManager.Get<AIHeroClient>()
-                        .Where(
-                            a =>
-                                a.IsEnemy && a.IsValidTarget(Ignite.Range) &&
-                                a.Health < 50 + 20*Shen.Level - (a.HPRegenRate/5*3)))
-            {
-                Ignite.Cast(source);
-                return;
             }
         }
 

@@ -53,9 +53,9 @@ namespace BloodimirVladimir
             VladMenu = MainMenu.AddMenu("Bloodimir", "bloodimir");
             VladMenu.AddGroupLabel("Bloodimir.Bloodimir");
             VladMenu.AddSeparator();
-            VladMenu.AddLabel("Bloodimir c what i did there? version 1.0.5.2 çeviri tradana");
+            VladMenu.AddLabel("Bloodimir c what i did there? version 1.0.5.2");
 
-            ComboMenu = VladMenu.AddSubMenu("Kombo", "sbtw");
+            ComboMenu = VladMenu.AddSubMenu("Combo", "sbtw");
             ComboMenu.AddGroupLabel("Kombo Ayarları");
             ComboMenu.AddSeparator();
             ComboMenu.Add("usecomboq", new CheckBox("Q Kullan"));
@@ -78,10 +78,10 @@ namespace BloodimirVladimir
             LaneClear.Add("LCQ", new CheckBox("Q Kullan"));
 
             LastHit = VladMenu.AddSubMenu("Last Hit", "lasthit");
-            LastHit.AddGroupLabel("Last Hit Ayarları");
+            LastHit.AddGroupLabel("Son VURUŞ Ayarları");
             LastHit.Add("LHQ", new CheckBox("Kullan Q"));
 
-            HarassMenu = VladMenu.AddSubMenu("Dürtme Menu", "harass");
+            HarassMenu = VladMenu.AddSubMenu("Harass Menu", "harass");
             HarassMenu.AddGroupLabel("Dürtme Settings");
             HarassMenu.Add("hq", new CheckBox("Dürtme Q"));
             HarassMenu.Add("he", new CheckBox("Dürtme E"));
@@ -90,7 +90,7 @@ namespace BloodimirVladimir
             HarassMenu.Add("autohe", new CheckBox("Dürtmede otomatik E Kullan"));
 
 
-            MiscMenu = VladMenu.AddSubMenu("Ek Menu", "miscmenu");
+            MiscMenu = VladMenu.AddSubMenu("Misc Menu", "miscmenu");
             MiscMenu.AddGroupLabel("Ek");
             MiscMenu.AddSeparator();
             MiscMenu.Add("ksq", new CheckBox("KS için Q"));
@@ -102,7 +102,7 @@ namespace BloodimirVladimir
             MiscMenu.Add("gapcloserhp", new Slider("Gapcloser W Health %", 25));
             MiscMenu.AddSeparator();
 
-            SkinMenu = VladMenu.AddSubMenu("Skin Değiştirici", "skin");
+            SkinMenu = VladMenu.AddSubMenu("Skin Changer", "skin");
             SkinMenu.AddGroupLabel("İstediğin Görünümü Seç");
 
             var skinchange = SkinMenu.Add("sID", new Slider("Skin", 5, 0, 7));
