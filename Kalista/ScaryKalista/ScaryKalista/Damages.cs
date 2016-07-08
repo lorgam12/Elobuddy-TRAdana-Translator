@@ -34,7 +34,8 @@ namespace ScaryKalista
 
         public static float GetRendDamage(Obj_AI_Base target)
         {
-            return Player.Instance.CalculateDamageOnUnit(target, DamageType.Physical, GetRawRendDamage(target)) * 0.9f;
+            return Player.Instance.CalculateDamageOnUnit(target, DamageType.Physical, GetRawRendDamage(target)) 
+                * (1 - Config.MiscMenu.GetValue("misc.dmgReductionE") / 100);
         }
 
         public static float GetRawRendDamage(Obj_AI_Base target)

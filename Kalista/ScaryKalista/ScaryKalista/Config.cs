@@ -105,7 +105,7 @@ namespace ScaryKalista
             }
 
             //Misc
-            MiscMenu = Menu.AddSubMenu("Ek");
+            MiscMenu = Menu.AddSubMenu("Misc");
             {
                 MiscMenu.Add("misc.labelSteal", new Label("Çalma: Hiçbir butona basma"));
                 MiscMenu.Add("misc.killstealE", new CheckBox("E için Killçalma"));
@@ -114,6 +114,9 @@ namespace ScaryKalista
                 MiscMenu.Add("misc.sep1", new Separator());
                 MiscMenu.Add("misc.autoE", new CheckBox("Otomatik Kullan E"));
                 MiscMenu.Add("misc.autoEHealth", new Slider("Canım şundan az olursa otomatik E çek", 10, 5, 25));
+
+                MiscMenu.Add("misc.sep2", new Separator());
+                MiscMenu.Add("misc.dmgReductionE", new Slider("Menzilden çıkan rakibin canını yüzde kaç azalacaksa E kullansın {0}%", 10, 0, 25));
 
                 MiscMenu.Add("misc.sep2", new Separator());
                 MiscMenu.Add("misc.unkillableE", new CheckBox("Öldürülemicek minyonlarda E kullan"));
@@ -143,7 +146,7 @@ namespace ScaryKalista
             {
                 BalistaMenu = Menu.AddSubMenu("Balista");
                 {
-                    BalistaMenu.Add("balista.use", new CheckBox("Use Balista"));
+                    BalistaMenu.Add("balista.use", new CheckBox("Kullan Balista"));
 
                     BalistaMenu.Add("balista.sep1", new Separator());
                     BalistaMenu.Add("balista.comboOnly", new CheckBox("Sadece kombo modunda balista kullan(spacebasılı"));
