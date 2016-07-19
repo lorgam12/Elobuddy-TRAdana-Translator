@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using EloBuddy;
-using EloBuddy.SDK;
-using EloBuddy.SDK.Menu;
+﻿using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 
 
@@ -31,18 +27,11 @@ namespace UBSivir
             //ComboMenu
             ComboMenu = Menu.AddSubMenu("Combo");
             {
-                ComboMenu.AddGroupLabel("Combo Ayarları");
+                ComboMenu.AddGroupLabel("Combo Settings");
                 ComboMenu.Add("useQCombo", new CheckBox("Kullan Q"));
-                ComboMenu.Add("AutoQ", new CheckBox("Hareketsiz hedefe otomatik Q"));
                 ComboMenu.Add("useWCombo", new CheckBox("Kullan W"));
                 ComboMenu.Add("useRCombo", new CheckBox("Kullan R"));
                 ComboMenu.Add("RHitCombo", new Slider("Komboda R sana ve arkadaşlarına kaç kişide kullansın", 4, 1, 4));
-                ComboMenu.Add("sep", new Separator());
-                ComboMenu.AddLabel("Büyüleri Kullan");
-                ComboMenu.Add("useheal", new CheckBox("Kullan Can"));
-                ComboMenu.Add("manageheal", new Slider("Eğer canım şundan azsa", 15, 1, 80));
-                ComboMenu.Add("usehealally", new CheckBox("Dostlara kullan"));
-                ComboMenu.Add("managehealally", new Slider("Eğer dostların canı şundan azsa", 10, 1, 80));
             }
             //Shield Menu
             ShieldMenu = Menu.AddSubMenu("ShieldMenu");
@@ -111,24 +100,10 @@ namespace UBSivir
             //MiscMenu          
             MiscMenu = Menu.AddSubMenu("MiscMenu");
             {
-                MiscMenu.AddGroupLabel("Ek Ayarları");
-                MiscMenu.AddLabel("Kill Çalma Ayarları");
-                MiscMenu.Add("useQKS", new CheckBox("Q Kullan"));
-
-                MiscMenu.AddLabel("Activator Item");
-                MiscMenu.Add("item.1", new CheckBox("Otomatik Bilgewater Palası"));
-                MiscMenu.Add("item.1MyHp", new Slider("benim canım {0}%", 95));
-                MiscMenu.Add("item.1EnemyHp", new Slider("Düşmanın canı {0}%", 70));
-                MiscMenu.Add("item.sep", new Separator());
-
-                MiscMenu.Add("item.2", new CheckBox("Otomatik Mahvolmuş"));
-                MiscMenu.Add("item.2MyHp", new Slider("benim canım {0}%", 80));
-                MiscMenu.Add("item.2EnemyHp", new Slider("Düşmanın canı {0}%", 70));
-                MiscMenu.Add("sep7", new Separator());
-
-                MiscMenu.AddLabel("Mod Skin");
-                MiscMenu.Add("Modskin", new CheckBox("Aktif mod skin"));
-                MiscMenu.Add("Modskinid", new Slider("Mod Skin", 5, 0, 8));
+                MiscMenu.AddGroupLabel("Ek Ayarlar");
+                MiscMenu.Add("useQKS", new CheckBox("Q ile çal"));
+                MiscMenu.Add("AutoQ", new CheckBox("Sabit hedefe otomatik Q"));
+                MiscMenu.Add("AutoW", new CheckBox("Otomatik atak Resetle"));
             }
         }
         public static bool BlockSpells

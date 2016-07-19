@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
-using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK.Rendering;
-using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Notifications;
 using SharpDX;
 
@@ -13,33 +10,36 @@ namespace UBSivir
 {
     class More
     {
-    public static void Loading_OnLoadingComplete(EventArgs args)
+        public static void Loading_OnLoadingComplete(EventArgs args)
         {
             if (Player.Instance.ChampionName != "Sivir") return;
 
             var notStart = new SimpleNotification("UBSivir Load Status", "UBSivir sucessfully loaded.");
             Notifications.Show(notStart, 5000);
 
-            Config.Dattenosa();           
+            Config.Dattenosa();
             _E.Initialize();
             _E_Advance.Initialize();
             Spells.InitSpells();
-            Items.InitItems();   
-            InitEvents();
-            Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;   
-        }
 
+            InitEvents();
+            Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
+            Obj_AI_Base.OnProcessSpellCast += Event.Obj_AI_Base_OnProcessSpellCast;
+            Obj_AI_Base.OnBuffGain += Event.Obj_AI_Base_OnBuffGain;
+
+            Orbwalker.OnUnkillableMinion += Mode.Orbwalker_OnUnkillableMinion;
+            Orbwalker.OnPostAttack += Event.Orbwalker_OnPostAttack;
+        }
         private static void InitEvents()
         {           
             Game.OnTick += GameOnTick;
+            Game.OnUpdate += On_Update;
             Drawing.OnDraw += OnDraw;          
         }
         private static void On_Update(EventArgs args)
         {         
-            Mode.Useheal();        
             if (Spells.Q.IsReady())
             {
-                Event.AutoQ();
                 Mode.Killsteal();
             }          
         }
@@ -54,19 +54,8 @@ namespace UBSivir
             { Mode.Harass(); }
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear))
             { Mode.LaneClear(); }
-            if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LastHit))
-            { Mode.Lasthit(); }
             if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.JungleClear))
-            { Mode.JungleClear(); }
-
-            if (ObjectManager.Player.SkinId != Config.MiscMenu["Modskinid"].Cast<Slider>().CurrentValue)
-            {
-                if (Config.MiscMenu["Modskin"].Cast<CheckBox>().CurrentValue)
-                {
-                    Player.SetSkinId(Config.MiscMenu["Modskinid"].Cast<Slider>().CurrentValue);
-                }
-            }
-      
+            { Mode.JungleClear(); }      
         }
         private static void OnDraw(EventArgs args)
         {

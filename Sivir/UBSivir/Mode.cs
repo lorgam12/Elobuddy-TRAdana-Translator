@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Menu.Values;
-using EloBuddy.SDK.Enumerations;
 
 namespace UBSivir
 {
@@ -12,21 +10,15 @@ namespace UBSivir
     {
         public static void Combo()
         {
-            if (Config.ComboMenu["useQCombo"].Cast<CheckBox>().CurrentValue
-                && Spells.Q.IsReady()
-                && !Player.Instance.IsDashing())
+            if (Config.ComboMenu["useQCombo"].Cast<CheckBox>().CurrentValue && Spells.Q.IsReady())
             {
                 var target = TargetSelector.GetTarget(Spells.Q.Range, DamageType.Physical);
                 if (target != null && target.IsValidTarget())
                 {
-                    Spells.Q.Cast(target.ServerPosition);
+                    var pred = Spells.Q.GetPrediction(target);
+                    Spells.Q.Cast(pred.CastPosition);
                 }
             }
-            if (Spells.W.IsReady()
-                && Config.ComboMenu["useWCombo"].Cast<CheckBox>().CurrentValue
-                && TargetSelector.GetTarget(550, DamageType.Physical) != null
-                && TargetSelector.GetTarget(550, DamageType.Physical).IsValidTarget()
-                && Spells.W.Cast()) Orbwalker.ResetAutoAttack();
             if (Config.ComboMenu["useRCombo"].Cast<CheckBox>().CurrentValue
                       && Spells.R.IsReady())
             {
@@ -49,7 +41,8 @@ namespace UBSivir
                 var target = TargetSelector.GetTarget(Spells.Q.Range, DamageType.Physical);
                 if (target != null && target.IsValidTarget())
                 {
-                    Spells.Q.Cast(target);
+                    var pred = Spells.Q.GetPrediction(target);
+                    Spells.Q.Cast(pred.CastPosition);
                 }
             }
             else if (Config.HarassMenu["useQHr"].Cast<CheckBox>().CurrentValue
@@ -61,14 +54,10 @@ namespace UBSivir
                 var target = TargetSelector.GetTarget(Spells.QLine.Range, DamageType.Physical);
                 if (target != null && target.IsValidTarget())
                 {
-                    Spells.QLine.Cast(target);
+                    var pred = Spells.Q.GetPrediction(target);
+                    Spells.Q.Cast(pred.CastPosition);
                 }
             }
-            if (Spells.W.IsReady()
-              && Config.HarassMenu["useWHr"].Cast<CheckBox>().CurrentValue
-              && TargetSelector.GetTarget(550, DamageType.Physical) != null
-              && TargetSelector.GetTarget(550, DamageType.Physical).IsValidTarget()
-              && Spells.W.Cast()) Orbwalker.ResetAutoAttack();
         }
         //LaneClear
         public static void LaneClear()
@@ -101,51 +90,27 @@ namespace UBSivir
 
         }
         //Lasthit
-        public enum AttackSpell
-        { Q, W }
-        private static Obj_AI_Base MinionQLh(GameObjectType type, AttackSpell spell)
+        public static void Orbwalker_OnUnkillableMinion(Obj_AI_Base target, Orbwalker.UnkillableMinionArgs args)
         {
-            return EntityManager.MinionsAndMonsters.EnemyMinions.OrderBy(a => a.Health).FirstOrDefault
-                (a => a.IsEnemy
-                && a.Type == type
-                && a.Distance(Sivir) <= Spells.Q.Range
-                && !a.IsDead
-                && !a.IsInvulnerable
-                && a.IsValidTarget(Spells.Q.Range)
-                && a.Health <= Damages.QDamage(a));
-        }
-
-        private static Obj_AI_Base MinionWlh(GameObjectType type, AttackSpell spell)
-        {
-            return EntityManager.MinionsAndMonsters.EnemyMinions.OrderBy(a => a.Health).FirstOrDefault
-                (a => a.IsEnemy
-                && a.Type == type
-                && a.Distance(Sivir) <= ObjectManager.Player.GetAutoAttackRange()
-                && !a.IsDead
-                && !a.IsInvulnerable
-                && a.IsValidTarget(ObjectManager.Player.GetAutoAttackRange())
-                && a.Health <= ObjectManager.Player.GetAutoAttackDamage(a));
-        }
-
-        public static void Lasthit()
-        {
-            var qminion = (Obj_AI_Minion)MinionQLh(GameObjectType.obj_AI_Minion, AttackSpell.Q);
-            if (qminion != null
-                && Player.Instance.ManaPercent >= Config.LasthitMenu["LhManager"].Cast<Slider>().CurrentValue
-                && Config.LasthitMenu["useQLh"].Cast<CheckBox>().CurrentValue)
+            if (Player.Instance.ManaPercent < Config.LasthitMenu["LhManager"].Cast<Slider>().CurrentValue) return;
+            if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Harass) || Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LaneClear) || Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.LastHit))
+            if (Config.LasthitMenu["useQLh"].Cast<CheckBox>().CurrentValue && Spells.Q.IsReady())
             {
-                Spells.Q.Cast(qminion.ServerPosition);
+                if (args.RemainingHealth < Damages.QDamage(target) && target.IsValidTarget(Spells.Q.Range))
+                {
+                    Spells.Q.Cast(target);
+                }
             }
-            if (Config.LasthitMenu["useWLh"].Cast<CheckBox>().CurrentValue
-            && Spells.W.IsReady())
+            if (Config.LasthitMenu["useWLh"].Cast<CheckBox>().CurrentValue)
             {
-                var wminion = (Obj_AI_Minion)MinionWlh(GameObjectType.obj_AI_Minion, AttackSpell.W);
-                if (wminion != null && Player.Instance.ManaPercent >= Config.LasthitMenu["LhManager"].Cast<Slider>().CurrentValue)
+                if (args.RemainingHealth < Player.Instance.GetAutoAttackDamage(target) && Player.Instance.IsInAutoAttackRange(target))
                 {
                     Spells.W.Cast();
+                    Player.IssueOrder(GameObjectOrder.AttackTo, target);
                 }
             }
         }
+
         //JungleClear
         public static void JungleClear()
         {
@@ -154,7 +119,7 @@ namespace UBSivir
             if (Orbwalker.IsAutoAttacking) return;
             Orbwalker.ForcedTarget = null;
             if (Config.JungleClear["useQJc"].Cast<CheckBox>().CurrentValue
-                && monster.Health > (ObjectManager.Player.GetAutoAttackDamage(Sivir) * 2)
+                && monster.Health > (ObjectManager.Player.GetAutoAttackDamage(Player.Instance) * 2)
                 && Player.Instance.ManaPercent >= Config.JungleClear["JcManager"].Cast<Slider>().CurrentValue
                 && Spells.Q.IsReady())
             {
@@ -173,43 +138,22 @@ namespace UBSivir
                 Spells.W.Cast();
             }
         }
-        public static readonly AIHeroClient Sivir = ObjectManager.Player;
         //KillSteal
         public static void Killsteal()
         {
-            if (Config.MiscMenu["useQKS"].Cast<CheckBox>().CurrentValue && Spells.Q.IsReady()) return;
-            try
+            if (!Config.MiscMenu["useQKS"].Cast<CheckBox>().CurrentValue && !Spells.Q.IsReady()) return;
             {
-                foreach (var kstarget in from qtarget in EntityManager.Heroes.Enemies.Where(
-                    hero => hero.IsValidTarget(Spells.Q.Range) && !hero.IsDead && !hero.IsZombie)
-                                         where Sivir.GetSpellDamage(qtarget, SpellSlot.Q) >= qtarget.Health
-                                         select Spells.Q.GetPrediction(qtarget))
+                var target = TargetSelector.GetTarget(EntityManager.Heroes.Enemies.Where(t => t != null
+                    && t.IsValidTarget()
+                    && Spells.Q.IsInRange(t)
+                    && t.Health <= Damages.QDamage(t)), DamageType.Physical);
+
+                if (target != null && Event.Unkillable(target) == false)
                 {
-                    Spells.Q.Cast(kstarget.CastPosition);
-                }
-            }
-            catch
-            {
-            }
-        }
-        public static void Useheal()
-        {
-            if (Config.ComboMenu["useheal"].Cast<CheckBox>().CurrentValue
-             && Player.Instance.HealthPercent <= Config.ComboMenu["manageheal"].Cast<Slider>().CurrentValue
-             && ObjectManager.Player.CountEnemiesInRange(900) >= 1
-             && Spells.heal.IsReady())
-            {
-                Spells.heal.Cast();
-            }
-            foreach (
-                var ally in EntityManager.Heroes.Allies.Where(a => !a.IsDead))
-            {
-                if (Config.ComboMenu["usehealally"].Cast<CheckBox>().CurrentValue && ally.CountEnemiesInRange(800) >= 1
-                    && ObjectManager.Player.Position.Distance(ally) < 800
-                    && ally.HealthPercent <= Config.ComboMenu["managehealally"].Cast<Slider>().CurrentValue
-                    && Spells.heal.IsReady())
-                {
-                    Spells.heal.Cast();
+                    var pred = Spells.Q.GetPrediction(target);
+                    {
+                        Spells.Q.Cast(pred.CastPosition);
+                    }
                 }
             }
         }

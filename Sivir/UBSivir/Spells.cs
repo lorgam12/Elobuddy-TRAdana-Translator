@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using EloBuddy;
+﻿using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
 
@@ -13,7 +11,6 @@ namespace UBSivir
         public static Spell.Active W { get; private set; }
         public static Spell.Active E { get; private set; }
         public static Spell.Active R { get; private set; }
-        public static Spell.Active heal { get; private set; }
 
         public static void InitSpells()
         {
@@ -25,11 +22,6 @@ namespace UBSivir
             W = new Spell.Active(SpellSlot.W, 750);   
             E = new Spell.Active(SpellSlot.E);
             R = new Spell.Active(SpellSlot.R, 1000);
-            var slot = ObjectManager.Player.GetSpellSlotFromName("summonerheal");
-            if (slot != SpellSlot.Unknown)
-            {
-                heal = new Spell.Active(slot, 800);
-            }
         }      
     }
 }

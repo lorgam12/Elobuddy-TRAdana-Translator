@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AD47C84F-4638-4BAC-9C19-30DA582430BB}</ProjectGuid>
+    <ProjectGuid>{9287F877-A9EC-4E1D-AEA2-2BEA8765D213}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UBSivir</RootNamespace>
-    <AssemblyName>UBSivir</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>ReRyze</RootNamespace>
+    <AssemblyName>ReRyze</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,8 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>ReRyze.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EloBuddy">
@@ -46,12 +44,10 @@
     <Reference Include="SharpDX">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\EloBuddy\System\SharpDX.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Direct3D9">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\EloBuddy\System\SharpDX.Direct3D9.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,31 +55,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigList\Combo.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Damages.cs" />
-    <Compile Include="_E_Advanced.cs" />
-    <Compile Include="Evade\Collision.cs" />
-    <Compile Include="Evade\Config.cs" />
-    <Compile Include="Evade\EvadeSpellData.cs" />
-    <Compile Include="Evade\EvadeSpellDatabase.cs" />
-    <Compile Include="Evade\Geometry.cs" />
-    <Compile Include="Evade\SkillshotDetector.cs" />
-    <Compile Include="Evade\SpellData.cs" />
-    <Compile Include="Evade\SpellDatabase.cs" />
-    <Compile Include="Evade\Utils.cs" />
-    <Compile Include="Event.cs" />
-    <Compile Include="Mode.cs" />
-    <Compile Include="More.cs" />
-    <Compile Include="Sivir.cs" />
+    <Compile Include="ConfigList\Drawing.cs" />
+    <Compile Include="ConfigList\Farm.cs" />
+    <Compile Include="ConfigList\Harass.cs" />
+    <Compile Include="ConfigList\ChanceHit.cs" />
+    <Compile Include="ConfigList\ManaManager.cs" />
+    <Compile Include="ConfigList\Misc.cs" />
+    <Compile Include="ConfigList\UltimateTeleport.cs" />
+    <Compile Include="Damage.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Spells.cs" />
-    <Compile Include="_E.cs" />
-    <Compile Include="Evade\Evade.cs" />
-    <Compile Include="Evade\Skillshot.cs" />
+    <Compile Include="SpellManager.cs" />
+    <Compile Include="Utility\Combo.cs" />
+    <Compile Include="Utility\Farm.cs" />
+    <Compile Include="Utility\Flee.cs" />
+    <Compile Include="Utility\Harass.cs" />
+    <Compile Include="Utility\Indicator.cs" />
+    <Compile Include="Utility\LastHit.cs" />
+    <Compile Include="Utility\PermaActive.cs" />
+    <Compile Include="Utility\UltimateTeleport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
