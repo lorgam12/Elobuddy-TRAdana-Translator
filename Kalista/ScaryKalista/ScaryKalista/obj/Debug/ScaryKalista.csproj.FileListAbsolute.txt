@@ -1,1 +1,1 @@
-C:\Users\MFI\Desktop\Çeviri\ScaryKalista\ScaryKalista\bin\Release\ScaryKalista.exe.config
+C:\Users\MFI\Desktop\çeviri\ScaryKalista\ScaryKalista\bin\Release\ScaryKalista.exe.config

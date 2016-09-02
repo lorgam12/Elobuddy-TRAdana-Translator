@@ -43,17 +43,17 @@ namespace ScaryKalista
             }
 
             //Harass
-            HarassMenu = Menu.AddSubMenu("Dürtme");
+            HarassMenu = Menu.AddSubMenu("Harass");
             {
                 HarassMenu.Add("harass.useQ", new CheckBox("Kullan Q"));
-                HarassMenu.Add("harass.minManaQ", new Slider("E için en az mana %", 60));
+                HarassMenu.Add("harass.minManaQ", new Slider("Q için en az mana", 60));
 
                 HarassMenu.Add("harass.sep1", new Separator());
                 HarassMenu.Add("harass.harassEnemyE", new CheckBox("Minyonları öldürerek hedefi dürt"));
             }
 
             //LaneClear
-            LaneMenu = Menu.AddSubMenu("LaneTemizleme");
+            LaneMenu = Menu.AddSubMenu("LaneClear");
             {
                 LaneMenu.Add("laneclear.useQ", new CheckBox("Kullan Q"));
                 LaneMenu.Add("laneclear.minQ", new Slider("Q için minyon say", 3, 2, 10));
@@ -69,21 +69,21 @@ namespace ScaryKalista
             }
 
             //JungleClear
-            JungleMenu = Menu.AddSubMenu("Orman temizleme");
+            JungleMenu = Menu.AddSubMenu("JungleClear");
             {
                 JungleMenu.Add("jungleclear.useE", new CheckBox("E ile mobları çal"));
                 JungleMenu.Add("jungleclear.miniE", new CheckBox("E ile küçük mobları çal", false));
             }
-
+            
             //Flee
-            FleeMenu = Menu.AddSubMenu("Flee(kaç)");
+            FleeMenu = Menu.AddSubMenu("Flee");
             {
-                FleeMenu.Add("flee.attack", new CheckBox("Saldır(Canavar,şamp,minyon)"));
+                FleeMenu.Add("flee.attack", new CheckBox("Minyonlara vura vura Kaç(Canavar,şamp,minyon)"));
                 FleeMenu.Add("flee.useJump", new CheckBox("Zıplama noktalarına geldiğim anda Q kullanarak atla"));
             }
 
             //Sentinel
-            SentinelMenu = Menu.AddSubMenu("Gözcü (W)");
+            SentinelMenu = Menu.AddSubMenu("Sentinel (W)");
             {
                 SentinelMenu.Add("sentinel.castDragon", new KeyBind("Ejdere Gözcü Yolla", false, KeyBind.BindTypes.HoldActive, 'U'));
                 SentinelMenu.Add("sentinel.castBaron", new KeyBind("Barona gözcü yolla", false, KeyBind.BindTypes.HoldActive, 'I'));
@@ -95,7 +95,7 @@ namespace ScaryKalista
                 SentinelMenu.Add("sentinel.mana", new Slider("Gözcü yollamak için en az mana", 40));
 
                 SentinelMenu.Add("sentinel.sep2", new Separator());
-                SentinelMenu.Add("sentinel.locationLabel", new Label("Gözcü kullan şunlara(baronejder bugtur=ban):"));
+                SentinelMenu.Add("sentinel.locationLabel", new Label("Gözcü kullan şunlara:"));
                 (SentinelMenu.Add("sentinel.baron", new CheckBox("Baron / Baronun Kız Kardeşi"))).OnValueChange += SentinelLocationsChanged;
                 (SentinelMenu.Add("sentinel.dragon", new CheckBox("Ejder"))).OnValueChange += SentinelLocationsChanged;
                 (SentinelMenu.Add("sentinel.mid", new CheckBox("Mide Yolla"))).OnValueChange += SentinelLocationsChanged;
@@ -118,10 +118,10 @@ namespace ScaryKalista
                 MiscMenu.Add("misc.sep2", new Separator());
                 MiscMenu.Add("misc.dmgReductionE", new Slider("Menzilden çıkan rakibin canını yüzde kaç azalacaksa E kullansın {0}%", 10, 0, 25));
 
-                MiscMenu.Add("misc.sep2", new Separator());
+                MiscMenu.Add("misc.sep3", new Separator());
                 MiscMenu.Add("misc.unkillableE", new CheckBox("Öldürülemicek minyonlarda E kullan"));
 
-                MiscMenu.Add("misc.sep3", new Separator());
+                MiscMenu.Add("misc.sep4", new Separator());
                 MiscMenu.Add("misc.useR", new CheckBox("R Dostlar için kullan"));
                 MiscMenu.Add("misc.healthR", new Slider("{0}% Dostumun canı", 15, 5, 25));
             }
@@ -138,7 +138,7 @@ namespace ScaryKalista
                 var bork = Items.BladeOfTheRuinedKing;
                 ItemMenu.Add("item." + bork.ItemInfo.Name, new CheckBox("Kullan " + bork.ItemInfo.Name));
                 ItemMenu.Add("item." + bork.ItemInfo.Name + "MyHp", new Slider("Senin canın şundan azsa {0}%", 80));
-                ItemMenu.Add("item." + bork.ItemInfo.Name + "EnemyHp", new Slider("Düşmanın cnaı şunda azsa {0}%", 80));
+                ItemMenu.Add("item." + bork.ItemInfo.Name + "EnemyHp", new Slider("Düşmanın cnaı şundan azsa {0}%", 80));
             }
 
             //Balista

@@ -21,45 +21,46 @@ namespace UBSivir
         {
             // Menu
             Menu = MainMenu.AddMenu("UB Sivir", "UBSivir");
-            Menu.AddGroupLabel("Made by Uzumaki Boruto");
+            Menu.AddGroupLabel("Uzumaki Boruto Tarafından yapıldı");
+            Menu.AddGroupLabel("tradana tarafindan çevrildi");
             Menu.AddLabel("Dattenosa");
 
             //ComboMenu
             ComboMenu = Menu.AddSubMenu("Combo");
             {
-                ComboMenu.AddGroupLabel("Combo Settings");
-                ComboMenu.Add("useQCombo", new CheckBox("Kullan Q"));
-                ComboMenu.Add("useWCombo", new CheckBox("Kullan W"));
-                ComboMenu.Add("useRCombo", new CheckBox("Kullan R"));
+                ComboMenu.AddGroupLabel("Kombo Ayarları");
+                ComboMenu.Add("useQCombo", new CheckBox("Q Kullan"));
+                ComboMenu.Add("useWCombo", new CheckBox("W Kullan"));
+                ComboMenu.Add("useRCombo", new CheckBox("R Kullan"));
                 ComboMenu.Add("RHitCombo", new Slider("Komboda R sana ve arkadaşlarına kaç kişide kullansın", 4, 1, 4));
             }
             //Shield Menu
             ShieldMenu = Menu.AddSubMenu("ShieldMenu");
             {
                 ShieldMenu.AddGroupLabel("Engelleme Ayarları");
-                ShieldMenu.Add("blockSpellsE", new CheckBox("Büyüleri Otomatik Blokla (E)"));
+                ShieldMenu.Add("blockSpellsE", new CheckBox("Büyüleri Otomatik Bloke Et (E)"));
                 ShieldMenu.AddSeparator();
 
-                ShieldMenu.AddGroupLabel("Düşman büyüleri Engelleme");
+                ShieldMenu.AddGroupLabel("Düşman Büyülerini Bloke");
             }
             //Shield Menu2
             ShieldMenu2 = Menu.AddSubMenu("ShieldMenu2");
             {
-                ShieldMenu2.AddGroupLabel("Ek Ayarları");
-                ShieldMenu2.Add("BlockChalleningE", new CheckBox("Otomatik E kullan bazı büyülerden kaçmak için"));
+                ShieldMenu2.AddGroupLabel("Çekirdek Ayarları");
+                ShieldMenu2.Add("BlockChalleningE", new CheckBox("Kanal büyülerden Kaçmak için otomatik E"));
                 ShieldMenu2.AddSeparator();
 
-                ShieldMenu2.AddGroupLabel("Düşman büyüleri Engelleme");
+                ShieldMenu2.AddGroupLabel("Düşman büyülerini Engelleme");
             }
 
             //HarassMenu
             HarassMenu = Menu.AddSubMenu("Harass");
             {
                 HarassMenu.AddGroupLabel("Dürtme Ayarları");
-                HarassMenu.Add("useQHr", new CheckBox("Kullan Q"));
+                HarassMenu.Add("useQHr", new CheckBox("Q Kullan"));
                 HarassMenu.Add("useQHr2", new CheckBox("Sadece minyon arkasında ise kullan Q"));
-                HarassMenu.Add("useWHr", new CheckBox("Kullan W"));
-                HarassMenu.Add("HrManage", new Slider("Eğer manam şundan azsa kullanma", 50));
+                HarassMenu.Add("useWHr", new CheckBox("W Kullan"));               
+                HarassMenu.Add("HrManage", new Slider("DÜrtmeyi manam şunun altındayken durdur", 50));
             }
 
             //LaneClear Menu
@@ -68,9 +69,9 @@ namespace UBSivir
                 LaneClear.AddGroupLabel("Lanetemizleme Ayarları");
                 LaneClear.Add("useQLc", new CheckBox("Q Kullan", false));
                 LaneClear.Add("useWLc", new CheckBox("W Kullan", false));
-                LaneClear.Add("WHitLc", new Slider("W için minyon sayısı", 6, 1, 30));
+                LaneClear.Add("WHitLc", new Slider("W için gerekn minyon", 6, 1, 30));
                 LaneClear.Add("autoWHr", new CheckBox("Otomatik W şu kadar düşmana çarpacaksa"));
-                LaneClear.Add("LcManager", new Slider("Eğer manam şundan azsa kullanma", 50));
+                LaneClear.Add("LcManager", new Slider("Eğer manam şundan azsa büyü kullanma %", 50));
             }
             //JungleClear Menu
             JungleClear = Menu.AddSubMenu("JungleClear");
@@ -79,7 +80,7 @@ namespace UBSivir
                 JungleClear.Add("useQJc", new CheckBox("Q Kullan"));
                 JungleClear.Add("useWJc", new CheckBox("W Kullan"));
                 JungleClear.Add("WHitJc", new Slider("Canavar say", 2, 1, 4));
-                JungleClear.Add("JcManager", new Slider("Eğer manam şundan azsa kullanma", 50));
+                JungleClear.Add("JcManager", new Slider("Eğer manam şundan azsa büyü kullanma %", 50));
             }
 
             //LasthitMenu
@@ -87,7 +88,7 @@ namespace UBSivir
             {
                 LasthitMenu.Add("useQLh", new CheckBox("Q Kullan"));
                 LasthitMenu.Add("useWLh", new CheckBox("W Kullan"));
-                LasthitMenu.Add("LhManager", new Slider("Eğer manam şundan azsa kullanma", 50));
+                LasthitMenu.Add("LhManager", new Slider("Manam şunun altındayken Büyü Kullanma %", 50));
             }
 
             //DrawMenu
@@ -101,8 +102,8 @@ namespace UBSivir
             MiscMenu = Menu.AddSubMenu("MiscMenu");
             {
                 MiscMenu.AddGroupLabel("Ek Ayarlar");
-                MiscMenu.Add("useQKS", new CheckBox("Q ile çal"));
-                MiscMenu.Add("AutoQ", new CheckBox("Sabit hedefe otomatik Q"));
+                MiscMenu.Add("useQKS", new CheckBox("Q ile Çal"));
+                MiscMenu.Add("AutoQ", new CheckBox("Hedef Sabitse Otomatik Q"));
                 MiscMenu.Add("AutoW", new CheckBox("Otomatik atak Resetle"));
             }
         }

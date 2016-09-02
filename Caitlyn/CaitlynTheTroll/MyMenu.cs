@@ -13,27 +13,28 @@ namespace CaitlynTheTroll
         public static void LoadMenu()
         {
             MyCaitlynTheTrollPage();
-            DrawMeNuPage();
             ComboMenuPage();
             FarmMeNuPage();
             HarassMeNuPage();
             ActivatorPage();
             MiscMeNuPage();
+            DrawMeNuPage();
         }
 
         private static void MyCaitlynTheTrollPage()
         {
             _myMenu = MainMenu.AddMenu("Caitlyn The Troll", "main");
             _myMenu.AddLabel(" Caitlyn The Troll " + Program.Version);
-            _myMenu.AddLabel(" Made by MeLoDag");
+            _myMenu.AddLabel("MeLoDag Tarafýndan kodlandý");
+            _myMenu.AddLabel("tradana tarafindan çevrildi.");
         }
 
         private static void DrawMeNuPage()
         {
             DrawMeNu = _myMenu.AddSubMenu("Draw  settings", "Draw");
-            DrawMeNu.AddGroupLabel("Gösterge Ayarlarý:");
+            DrawMeNu.AddGroupLabel("Draw Settings:");
             DrawMeNu.Add("nodraw",
-                new CheckBox("Biþey gösterme", false));
+                new CheckBox("Hiçbir þey gösterme", false));
           DrawMeNu.AddSeparator();
             DrawMeNu.Add("draw.Q",
                 new CheckBox("Göster Q"));
@@ -49,31 +50,34 @@ namespace CaitlynTheTroll
         {
             ComboMenu = _myMenu.AddSubMenu("Combo settings", "Combo");
             ComboMenu.AddGroupLabel("Combo Ayarlarý:");
-            ComboMenu.AddLabel("Q Kullan");
+            ComboMenu.AddLabel("Q Kullanma Ayarlarý");
             foreach (var enemies in EntityManager.Heroes.Enemies.Where(i => !i.IsMe))
             {
                 ComboMenu.Add("combo.Q" + enemies.ChampionName, new CheckBox("" + enemies.ChampionName));
             }
-            ComboMenu.AddSeparator();
+            ComboMenu.Add("combo.CCQ",
+                new CheckBox("Kullan Q"));
+            ComboMenu.AddLabel("E Ayarlarý:");
             ComboMenu.Add("combo.E",
                 new CheckBox("Kullan E"));
+            ComboMenu.Add("combo.CC",
+             new CheckBox("Kullan E"));
+            ComboMenu.AddLabel("W Ayarlarý:");
             ComboMenu.Add("combo.w",
                 new CheckBox("Kullan W"));
-          ComboMenu.Add("combo.R",
-                new CheckBox("Kullan R"));
-            ComboMenu.AddSeparator();
-            ComboMenu.AddGroupLabel("Kombo özellikelri:");
-           ComboMenu.Add("comboEQbind",
-                new KeyBind("Kullan E + Q Büyüleri", false, KeyBind.BindTypes.HoldActive, 'Z'));
-            ComboMenu.Add("combo.CC",
-                new CheckBox("Kullan E CC"));
-            ComboMenu.Add("combo.CCQ",
-                new CheckBox("Kullan Q CC"));
+            ComboMenu.AddLabel("W kullanmadan Zhonya,MF ulti, teleport hatýrla :)");
             ComboMenu.Add("combo.CCW",
-               new CheckBox("Kullan W CC"));
-            ComboMenu.Add("combo.REnemies",
-                new Slider("R için en az düþman", 1, 0, 5));
-        }
+            new CheckBox("Kullan W CC"));
+            ComboMenu.AddLabel("R Ayarlarý:");
+            ComboMenu.Add("combo.R",
+                new CheckBox("Kullan Akýllý R"));
+            ComboMenu.AddSeparator();
+            ComboMenu.AddLabel("Kombo Ayarlarý:");
+           ComboMenu.Add("comboEQbind",
+                new KeyBind("Kullan E > Q > AA", false, KeyBind.BindTypes.HoldActive, 'Z'));
+         
+         
+           }
 
 
         private static void FarmMeNuPage()
@@ -83,9 +87,9 @@ namespace CaitlynTheTroll
             FarmMeNu.Add("Lane.Q",
                 new CheckBox("Kullan Q"));
             FarmMeNu.Add("LaneMana",
-                new Slider("Lanetemizleme için en az mana %", 60));
+                new Slider("Lantemizlemek için en az mana %", 60));
             FarmMeNu.AddSeparator();
-            FarmMeNu.AddGroupLabel("Orman Ayarlarý");
+            FarmMeNu.AddLabel("Orman Ayarlarý");
             FarmMeNu.Add("jungle.Q",
                 new CheckBox("Kullan Q"));
         }
@@ -95,15 +99,17 @@ namespace CaitlynTheTroll
             HarassMeNu = _myMenu.AddSubMenu("Harass/Killsteal Settings", "hksettings");
             HarassMeNu.AddGroupLabel("Dürtme Ayarlarý:");
             HarassMeNu.AddSeparator();
-            HarassMeNu.AddLabel("Q Kullan");
+            HarassMeNu.AddLabel("Q þunlarda kullan");
             foreach (var enemies in EntityManager.Heroes.Enemies.Where(i => !i.IsMe))
             {
                 HarassMeNu.Add("Harass.Q" + enemies.ChampionName, new CheckBox("" + enemies.ChampionName));
             }
-            HarassMeNu.Add("harass.QE",
-                new Slider("Dürtme için mana %", 55));
             HarassMeNu.AddSeparator();
-            HarassMeNu.AddGroupLabel("Killçalma ayarlarý:");
+            HarassMeNu.Add("UseWharass", new CheckBox("Use W"));
+            HarassMeNu.Add("harass.QE",
+                new Slider("en az þu kadar manam varsa %", 55));
+            HarassMeNu.AddSeparator();
+            HarassMeNu.AddLabel("Kill Çalma AYarlarý:");
             HarassMeNu.Add("killsteal.Q",
                 new CheckBox("Kullan Q", false));
         }
@@ -111,62 +117,56 @@ namespace CaitlynTheTroll
         private static void ActivatorPage()
         {
             Activator = _myMenu.AddSubMenu("Activator Settings", "Items");
-            Activator.AddGroupLabel("Auto QSS if :");
+            Activator.AddGroupLabel("Otomatik QSS Kullan Eðer :");
             Activator.Add("Blind",
-                new CheckBox("Kör", false));
+                new CheckBox("Körse", false));
             Activator.Add("Charm",
-                new CheckBox("Çekiliyorsa(ahri)"));
+                new CheckBox("Çekilmiþse(Ahri)"));
             Activator.Add("Fear",
-                new CheckBox("Korkmuþsa"));
+                new CheckBox("Kokrmuþsa"));
             Activator.Add("Polymorph",
-                new CheckBox("Polymorph"));
+                new CheckBox("Polymorph(Lulu W)"));
             Activator.Add("Stun",
-                new CheckBox("Sabitlenmiþse"));
+                new CheckBox("Sersemlemiþse"));
             Activator.Add("Snare",
-                new CheckBox("Tuzaða düþünce"));
+                new CheckBox("Snare"));
             Activator.Add("Silence",
-                new CheckBox("Sustutulduysa", false));
+                new CheckBox("Susturulmuþsa", false));
             Activator.Add("Taunt",
                 new CheckBox("Alay ediliyorsa"));
             Activator.Add("Suppression",
-                new CheckBox("Durdurulmuþsa"));
-            Activator.AddGroupLabel("Item Kullanýmý:");
-            Activator.AddSeparator();
-       Activator.Add("bilgewater",
-                new CheckBox("Bilgewater palasý Kullan"));
+                new CheckBox("WW,Urgot RS(Suppression)"));
+            Activator.AddLabel("Ýtem Kullanýmý:");
+         Activator.Add("bilgewater",
+                new CheckBox("Bilgewater palasý kullan"));
             Activator.Add("bilgewater.HP",
-                new Slider("Kullanmak için can {0}(%)", 60));
+                new Slider("Bilgewater palasý için gereken can {0}(%)", 60));
             Activator.AddSeparator();
             Activator.Add("botrk",
-                new CheckBox("Mahvolmuþ kýlýcý kullan"));
+                new CheckBox("Mahvolmuþ kýlýç kullan"));
             Activator.Add("botrk.HP",
-                new Slider("mahvolmuþ için can {0}(%)", 60));
+                new Slider("Mahvolmuþ kýlýç için gereken can {0}(%)", 60));
             Activator.AddSeparator();
             Activator.Add("youmus",
-                new CheckBox("Kullan Youmus"));
+                new CheckBox("Kullan Youmus Kýlýcý"));
             Activator.Add("items.Youmuss.HP",
-                new Slider("Youumu için can {0}(%)", 60, 1));
+                new Slider("Youmuss için gereken can {0}(%)", 60, 1));
             Activator.Add("youmus.Enemies",
-                new Slider("Youumu için kaç düþman menzilde olsun", 3, 1, 5));
-            Activator.AddSeparator();
-            Activator.AddGroupLabel("Ýksir Ayarlarý");
+                new Slider("Eðer menzilde þu kadar {0} düþman varsa Kullan", 3, 1, 5));
+           Activator.AddLabel("Ýksir Ayarlarý");
             Activator.Add("spells.Potions.Check",
                 new CheckBox("Kullan Ýksirler"));
             Activator.Add("spells.Potions.HP",
                 new Slider("Caným þundan azsa {0}(%)", 60, 1));
             Activator.Add("spells.Potions.Mana",
                 new Slider("Manam þundan azsa {0}(%)", 60, 1));
-            Activator.AddSeparator();
-            Activator.AddGroupLabel("Büyü Ayarlarý:");
-            Activator.AddGroupLabel("Bariyer Ayarlarý:");
-            Activator.Add("spells.Barrier.Hp",
-                new Slider("Bariyer kullanmak için gereken can {0}(%)", 30, 1));
-            Activator.AddGroupLabel("Ýyileþtirme Ayarlarý:");
+            Activator.AddLabel("Büyü Ayarlarý:");
+           Activator.AddLabel("Ýyileþtirme ayarlarý:");
             Activator.Add("spells.Heal.Hp",
-                new Slider("Ýyileþtirme için gereken can {0}(%)", 30, 1));
-            Activator.AddGroupLabel("Tutuþtur Ayarlarý:");
+                new Slider("Eðer caným þundan düþükse kullan {0}(%)", 30, 1));
+            Activator.AddLabel("Tutuþtur Ayarlarý:");
             Activator.Add("spells.Ignite.Focus",
-                new Slider("Tutuþtur kullanmak için hedefin caný {0}(%)", 10, 1));
+                new Slider("Tutuþtur kullanmak için hedefin caný þundan az {0}(%)", 10, 1));
         }
 
         private static void MiscMeNuPage()
@@ -175,19 +175,18 @@ namespace CaitlynTheTroll
             MiscMeNu.AddGroupLabel("Kaçma ayarlarý");
             MiscMeNu.Add("useEmouse",
                 new KeyBind("Kullan E Fareye doðru", false, KeyBind.BindTypes.HoldActive, "T".ToCharArray()[0]));
-            MiscMeNu.AddGroupLabel("Anti Gap Closer/Interrupt");
+            MiscMeNu.AddLabel("Anti Tehlikeli Yakýnlaþma/Tehlikeli Yetenek");
             MiscMeNu.Add("gapcloser.E",
-                new CheckBox("Kullan E GapCloser"));
+                new CheckBox("Tehlikeli yakýnlaþmayý engellemek için E kullan"));
             MiscMeNu.Add("gapcloser.W",
-                new CheckBox("Kullan W GapCloser"));
+                new CheckBox("Tehlikeli yakýnlaþmayý engellemek için W kullan"));
             MiscMeNu.Add("interupt.W",
-              new CheckBox("Kullan W Interrupt"));
-            MiscMeNu.AddSeparator();
-            MiscMeNu.AddGroupLabel("Kostüm Ayarlarý");
+              new CheckBox("Tehlikeli yeteneði bozmak için W kullan"));
+            MiscMeNu.AddLabel("Kostüm Ayarlarý");
             MiscMeNu.Add("checkSkin",
-                new CheckBox("Kostüm Deðiþtrici:", false));
+                new CheckBox("Kostüm Deðiþtirici Kullan:", false));
             MiscMeNu.Add("skin.Id",
-                new Slider("Kostüm Deðiþtir", 5, 0, 10));
+                new Slider("Kostüm Sayýsý", 5, 0, 10));
         }
 
         public static bool Nodraw()
@@ -260,7 +259,10 @@ namespace CaitlynTheTroll
         {
             return HarassMeNu["harass.Q"].Cast<CheckBox>().CurrentValue;
         }
-
+        public static bool HarassW()
+        {
+            return HarassMeNu["UseWharass"].Cast<CheckBox>().CurrentValue;
+        }
         public static float HarassQe()
         {
             return HarassMeNu["harass.QE"].Cast<Slider>().CurrentValue;

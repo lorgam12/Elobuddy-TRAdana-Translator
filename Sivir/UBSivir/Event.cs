@@ -10,7 +10,7 @@ namespace UBSivir
     {
         public static void Obj_AI_Base_OnBuffGain(Obj_AI_Base sender, Obj_AI_BaseBuffGainEventArgs args)
         {
-            if (sender.IsEnemy && sender.IsValidTarget(Spells.Q.Range))
+            if (sender.IsEnemy && !sender.IsMonster && !sender.IsMinion && sender.IsValidTarget(Spells.Q.Range))
             {
                 if (sender.HasBuffOfType(BuffType.Stun)
                  || sender.HasBuffOfType(BuffType.Snare)
