@@ -40,7 +40,7 @@ namespace KappAIO.Utility.Tracker
 
             JunglerTime.Color = Color.FromArgb((int)red, (int)green, 0);
 
-            JunglerTime.TextValue = (EnemyJungler.Hero.IsDead ? "Ölü" : countdown.ToString(CultureInfo.CurrentCulture)) + " - " + EnemyJungler.Hero.ChampionName;
+            JunglerTime.TextValue = (EnemyJungler.Hero.IsDead ? "Dead" : countdown.ToString(CultureInfo.CurrentCulture)) + " - " + EnemyJungler.Hero.ChampionName;
             JunglerTime.Position = Player.Instance.ServerPosition.WorldToScreen();
             JunglerTime.Draw();
         }

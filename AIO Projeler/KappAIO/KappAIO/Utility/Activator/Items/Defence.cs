@@ -15,17 +15,17 @@ namespace KappAIO.Utility.Activator.Items
         {
             try
             {
-                Def = Load.MenuIni.AddSubMenu("Savunma İtemleri");
-                Def.CreateCheckBox("ally", "Dostlara Kullan");
+                Def = Load.MenuIni.AddSubMenu("Defence Items");
+                Def.CreateCheckBox("ally", "Use For Allies");
                 Def.AddSeparator();
-                Def.CreateCheckBox(Zhonyas.Id.ToString(), "Zhanya Kullan");
-                Def.CreateSlider(Zhonyas.Id + "hp", "Zhonyas için canım şundan az% {0}%", 30);
-                Def.CreateCheckBox(Seraphs.Id.ToString(), "Seraph Kullan");
-                Def.CreateSlider(Seraphs.Id + "hp", "Seraphs için canım% {0}%", 40);
-                Def.CreateCheckBox(Solari.Id.ToString(), "Solari Kullan");
-                Def.CreateSlider(Solari.Id + "hp", "Solari için canım% {0}%", 50);
-                Def.CreateCheckBox(Randuins.Id.ToString(), "Randuin Kullan");
-                Def.CreateSlider(Randuins.Id + "hp", "Randuins için canım% {0}%", 60);
+                Def.CreateCheckBox(Zhonyas.Id.ToString(), "Use Zhonyas");
+                Def.CreateSlider(Zhonyas.Id + "hp", "Zhonyas HP% {0}%", 30);
+                Def.CreateCheckBox(Seraphs.Id.ToString(), "Use Seraphs");
+                Def.CreateSlider(Seraphs.Id + "hp", "Seraphs HP% {0}%", 40);
+                Def.CreateCheckBox(Solari.Id.ToString(), "Use Solari");
+                Def.CreateSlider(Solari.Id + "hp", "Solari HP% {0}%", 50);
+                Def.CreateCheckBox(Randuins.Id.ToString(), "Use Randuins");
+                Def.CreateSlider(Randuins.Id + "hp", "Randuins HP% {0}%", 60);
 
                 Events.OnIncomingDamage += Events_OnIncomingDamage;
                 Game.OnTick += Game_OnTick;

@@ -21,12 +21,12 @@ namespace KappAIO.Utility.Activator.Items
         {
             try
             {
-                PotionsMenu = Load.MenuIni.AddSubMenu("İksirler");
+                PotionsMenu = Load.MenuIni.AddSubMenu("Potions");
                 Pots.ForEach(
                     p =>
                         {
-                            PotionsMenu.CreateCheckBox(p.Id.ToString(), "Kullan " + p.ItemInfo.Name);
-                            PotionsMenu.CreateSlider(p.Id + "hp", p.ItemInfo.Name + " canım% {0}%", 60);
+                            PotionsMenu.CreateCheckBox(p.Id.ToString(), "Use " + p.ItemInfo.Name);
+                            PotionsMenu.CreateSlider(p.Id + "hp", p.ItemInfo.Name + " HP% {0}%", 60);
                             PotionsMenu.AddSeparator(0);
                         });
                 Events.OnIncomingDamage += Events_OnIncomingDamage;

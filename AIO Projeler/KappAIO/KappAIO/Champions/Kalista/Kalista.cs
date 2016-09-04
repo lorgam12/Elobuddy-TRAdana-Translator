@@ -69,28 +69,28 @@ namespace KappAIO.Champions.Kalista
             SpellList.Add(E);
 
             MenuIni = MainMenu.AddMenu(MenuName, MenuName);
-            AutoMenu = MenuIni.AddSubMenu("Auto");
-            ComboMenu = MenuIni.AddSubMenu("Combo");
-            HarassMenu = MenuIni.AddSubMenu("Harass");
-            JungleClearMenu = MenuIni.AddSubMenu("JungleClear");
-            LaneClearMenu = MenuIni.AddSubMenu("LaneClear");
-            KillStealMenu = MenuIni.AddSubMenu("KillSteal");
-            DrawMenu = MenuIni.AddSubMenu("Drawings");
+            AutoMenu = MenuIni.AddSubMenu("Otomatik");
+            ComboMenu = MenuIni.AddSubMenu("Kombo");
+            HarassMenu = MenuIni.AddSubMenu("Dürtme");
+            JungleClearMenu = MenuIni.AddSubMenu("OrmanTemizleme");
+            LaneClearMenu = MenuIni.AddSubMenu("LaneTemizleme");
+            KillStealMenu = MenuIni.AddSubMenu("KillÇal");
+            DrawMenu = MenuIni.AddSubMenu("Göstergeler");
 
             SpellList.ForEach(
                 i =>
                 {
-                    ComboMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
-                    HarassMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
-                    HarassMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Manager {0}%", 60);
+                    ComboMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
+                    HarassMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
+                    HarassMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Yardımcısı {0}%", 60);
                     HarassMenu.AddSeparator(0);
-                    LaneClearMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
-                    LaneClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Manager {0}%", 60);
+                    LaneClearMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
+                    LaneClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Yardımcısı {0}%", 60);
                     LaneClearMenu.AddSeparator(0);
-                    JungleClearMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
-                    JungleClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Manager {0}%", 60);
+                    JungleClearMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
+                    JungleClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Yardımcısı {0}%", 60);
                     JungleClearMenu.AddSeparator(0);
-                    KillStealMenu.CreateCheckBox(i.Slot, i.Slot + " KillSteal");
+                    KillStealMenu.CreateCheckBox(i.Slot, i.Slot + " KillÇal");
                     DrawMenu.CreateCheckBox(i.Slot, "Göster " + i.Slot);
                 });
 

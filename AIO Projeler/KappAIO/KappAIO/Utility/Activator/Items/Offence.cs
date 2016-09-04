@@ -23,15 +23,15 @@ namespace KappAIO.Utility.Activator.Items
         {
             try
             {
-                Offen = Load.MenuIni.AddSubMenu("Saldırgan İtemler");
-                DmgItems.ForEach(i => Offen.CreateCheckBox(i.Id.ToString(), "Kullan " + i.ItemInfo.Name));
-                AAItems.ForEach(i => Offen.CreateCheckBox(i.Id.ToString(), "Kullan " + i.ItemInfo.Name));
+                Offen = Load.MenuIni.AddSubMenu("Offence Items");
+                DmgItems.ForEach(i => Offen.CreateCheckBox(i.Id.ToString(), "Use " + i.ItemInfo.Name));
+                AAItems.ForEach(i => Offen.CreateCheckBox(i.Id.ToString(), "Use " + i.ItemInfo.Name));
                 HPItems.ForEach(
                     i =>
                     {
                         Offen.AddSeparator(0);
-                        Offen.CreateCheckBox(i.Id.ToString(), "Kullan " + i.ItemInfo.Name);
-                        Offen.CreateSlider(i.Id + "hp", i.ItemInfo.Name + " Canım şundan azsa Kullan% {0}%", 70);
+                        Offen.CreateCheckBox(i.Id.ToString(), "Use " + i.ItemInfo.Name);
+                        Offen.CreateSlider(i.Id + "hp", i.ItemInfo.Name + " Use on HP% {0}%", 70);
                         });
                 Orbwalker.OnPostAttack += Orbwalker_OnPostAttack;
                 Game.OnTick += Game_OnTick;

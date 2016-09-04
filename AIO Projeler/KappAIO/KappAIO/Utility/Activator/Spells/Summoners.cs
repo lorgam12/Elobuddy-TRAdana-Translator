@@ -12,15 +12,15 @@ namespace KappAIO.Utility.Activator.Spells
 
         public static void Init()
         {
-            SummMenu = Load.MenuIni.AddSubMenu("SihirdarBüyüler");
-            SummMenu.AddGroupLabel("Dostlar");
-            SummMenu.CreateCheckBox("ally", "İyileştirmeyi Dostlara");
-            SummMenu.CreateSlider("allyhp", "Dostların Canı", 30);
+            SummMenu = Load.MenuIni.AddSubMenu("SummonerSpells");
+            SummMenu.AddGroupLabel("Allies");
+            SummMenu.CreateCheckBox("ally", "Use Heal For Allies");
+            SummMenu.CreateSlider("allyhp", "Ally HP% {0}% To Use Heal", 30);
             SummMenu.AddSeparator(0);
-            SummMenu.AddGroupLabel("kendine");
-            SummMenu.CreateCheckBox("ignite", "Tutuştur");
-            SummMenu.CreateCheckBox("me", "İyileştirme Kendine");
-            SummMenu.CreateSlider("hp", "İyileştirme İçin canım şundan az", 30);
+            SummMenu.AddGroupLabel("Self");
+            SummMenu.CreateCheckBox("ignite", "Use Ignite");
+            SummMenu.CreateCheckBox("me", "Use Heal For Self");
+            SummMenu.CreateSlider("hp", "Self HP% {0}% To Use Heal", 30);
 
             Events.OnIncomingDamage += Events_OnIncomingDamage;
             Game.OnTick += Game_OnTick;

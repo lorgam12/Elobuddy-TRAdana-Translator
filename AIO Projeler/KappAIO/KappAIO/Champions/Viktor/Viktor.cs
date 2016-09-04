@@ -38,44 +38,44 @@ namespace KappAIO.Champions.Viktor
             SpellList.Add(R);
 
             MenuIni = MainMenu.AddMenu(MenuName, MenuName);
-            AutoMenu = MenuIni.AddSubMenu("Auto");
-            ComboMenu = MenuIni.AddSubMenu("Combo");
-            HarassMenu = MenuIni.AddSubMenu("Harass");
-            JungleClearMenu = MenuIni.AddSubMenu("JungleClear");
-            LaneClearMenu = MenuIni.AddSubMenu("LaneClear");
-            KillStealMenu = MenuIni.AddSubMenu("KillSteal");
-            DrawMenu = MenuIni.AddSubMenu("Drawings");
+            AutoMenu = MenuIni.AddSubMenu("Otomatik");
+            ComboMenu = MenuIni.AddSubMenu("Kombo");
+            HarassMenu = MenuIni.AddSubMenu("Dürtme");
+            JungleClearMenu = MenuIni.AddSubMenu("OrmanTemizleme");
+            LaneClearMenu = MenuIni.AddSubMenu("LaneTemizleme");
+            KillStealMenu = MenuIni.AddSubMenu("KillÇal");
+            DrawMenu = MenuIni.AddSubMenu("Göstergeler");
 
             SpellList.ForEach(
                 i =>
                 {
-                    ComboMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
+                    ComboMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
                     if (i != R && i != W)
                     {
-                        HarassMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
-                        HarassMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Manager {0}%", 60);
+                        HarassMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
+                        HarassMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Yardımcısı {0}%", 60);
                         HarassMenu.AddSeparator(0);
-                        LaneClearMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
-                        LaneClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Manager {0}%", 60);
+                        LaneClearMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
+                        LaneClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Yardımcısı {0}%", 60);
                         LaneClearMenu.AddSeparator(0);
-                        JungleClearMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
-                        JungleClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Manager {0}%", 60);
+                        JungleClearMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
+                        JungleClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Yardımcısı {0}%", 60);
                         JungleClearMenu.AddSeparator(0);
                     }
-                    KillStealMenu.CreateCheckBox(i.Slot, i.Slot + " KillSteal");
-                    DrawMenu.CreateCheckBox(i.Slot, "Draw " + i.Slot);
+                    KillStealMenu.CreateCheckBox(i.Slot, i.Slot + " KillÇal");
+                    DrawMenu.CreateCheckBox(i.Slot, "Göster " + i.Slot);
                 });
 
-            AutoMenu.Add("Wmode", new ComboBox("W ile Rakibe Yaklaşma/Uzaklaşma", 1, "Kendine", "Düşmana"));
-            AutoMenu.CreateCheckBox("GapW", "Tehlikeli Yakınlaşmayı Önlemek için W");
-            AutoMenu.CreateCheckBox("IntW", "Tehlikeli yeteneği bozmak için W kullan");
-            AutoMenu.CreateCheckBox("IntR", "Tehlikeli yeteneği bozmak için R kullan");
-            AutoMenu.CreateCheckBox("Qunk", "Ölmeyecek Minyona Otomatik Q");
+            AutoMenu.Add("Wmode", new ComboBox("GapCloser W Mode", 1, "Place On Self", "Place On Enemy"));
+            AutoMenu.CreateCheckBox("GapW", "Auto W Anti-GapCloser");
+            AutoMenu.CreateCheckBox("IntW", "Auto W Interrupter");
+            AutoMenu.CreateCheckBox("IntR", "Auto R Interrupter");
+            AutoMenu.CreateCheckBox("Qunk", "Auto Q UnKillable Minions");
 
-            ComboMenu.CreateSlider("RAOE", "R Alan hasarı Vuracağı Hedef {0}", 2, 1, 6);
-            ComboMenu.CreateSlider("RMulti", "Çoğaltılmış R Hasarı X{0} Kadar süre", 3, 1, 10);
+            ComboMenu.CreateSlider("RAOE", "R AoE Hit Count {0}", 2, 1, 6);
+            ComboMenu.CreateSlider("RMulti", "Mutilply R Damage By X{0} Times", 3, 1, 10);
 
-            LaneClearMenu.CreateSlider("Ehits", "E Vuracağı hedefi Say {0}", 3, 1, 20);
+            LaneClearMenu.CreateSlider("Ehits", "E Hit Count {0}", 3, 1, 20);
 
             Obj_AI_Base.OnProcessSpellCast += Obj_AI_Base_OnProcessSpellCast;
             Interrupter.OnInterruptableSpell += Interrupter_OnInterruptableSpell;

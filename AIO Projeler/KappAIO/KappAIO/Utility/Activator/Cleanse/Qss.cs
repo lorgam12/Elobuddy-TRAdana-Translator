@@ -30,21 +30,21 @@ namespace KappAIO.Utility.Activator.Cleanse
             try
             {
                 Clean = Load.MenuIni.AddSubMenu("Qss");
-                Clean.CreateCheckBox("ally", "Qss Dostlar için");
+                Clean.CreateCheckBox("ally", "Qss Allies");
                 if (Player.Instance.Hero == Champion.Gangplank)
                 {
                     Clean.AddSeparator(0);
-                    Clean.AddGroupLabel("Büyüler");
-                    Clean.CreateCheckBox("W", "GangPlankta W");
+                    Clean.AddGroupLabel("Spells");
+                    Clean.CreateCheckBox("W", "Use Gangplank W");
                 }
                 Clean.AddSeparator(0);
-                Clean.AddGroupLabel("İtemler");
-                Clean.CreateCheckBox("Cleanse", "Sihirdarı Arındır");
-                SelfQss.ForEach(i => Clean.CreateCheckBox(i.Id.ToString(), "Kullan " + i.ItemInfo.Name));
-                AllyQss.ForEach(i => Clean.CreateCheckBox(i.Id.ToString(), "Kullan " + i.ItemInfo.Name));
+                Clean.AddGroupLabel("Items");
+                Clean.CreateCheckBox("Cleanse", "Use Summoner Cleanse");
+                SelfQss.ForEach(i => Clean.CreateCheckBox(i.Id.ToString(), "Use " + i.ItemInfo.Name));
+                AllyQss.ForEach(i => Clean.CreateCheckBox(i.Id.ToString(), "Use " + i.ItemInfo.Name));
                 Clean.AddSeparator(0);
-                Clean.AddGroupLabel("Arındırma Kullan");
-                BuffsToQss.ForEach(b => Clean.CreateCheckBox(b.ToString(), "Şunlardan Kullan " + b));
+                Clean.AddGroupLabel("Buffs To Qss");
+                BuffsToQss.ForEach(b => Clean.CreateCheckBox(b.ToString(), "Use On " + b));
 
                 Game.OnTick += Game_OnTick;
             }
