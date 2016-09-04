@@ -38,36 +38,36 @@ namespace KappAIO.Champions.Viktor
             SpellList.Add(R);
 
             MenuIni = MainMenu.AddMenu(MenuName, MenuName);
-            AutoMenu = MenuIni.AddSubMenu("Otomatik");
-            ComboMenu = MenuIni.AddSubMenu("Kombo");
-            HarassMenu = MenuIni.AddSubMenu("Dürtme");
-            JungleClearMenu = MenuIni.AddSubMenu("OrmanTemizleme");
-            LaneClearMenu = MenuIni.AddSubMenu("LaneTemizleme");
-            KillStealMenu = MenuIni.AddSubMenu("KillÇalma");
-            DrawMenu = MenuIni.AddSubMenu("Göstergeler");
+            AutoMenu = MenuIni.AddSubMenu("Auto");
+            ComboMenu = MenuIni.AddSubMenu("Combo");
+            HarassMenu = MenuIni.AddSubMenu("Harass");
+            JungleClearMenu = MenuIni.AddSubMenu("JungleClear");
+            LaneClearMenu = MenuIni.AddSubMenu("LaneClear");
+            KillStealMenu = MenuIni.AddSubMenu("KillSteal");
+            DrawMenu = MenuIni.AddSubMenu("Drawings");
 
             SpellList.ForEach(
                 i =>
                 {
-                    ComboMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
+                    ComboMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
                     if (i != R && i != W)
                     {
-                        HarassMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
-                        HarassMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Yardımcısı {0}%", 60);
+                        HarassMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
+                        HarassMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Manager {0}%", 60);
                         HarassMenu.AddSeparator(0);
-                        LaneClearMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
-                        LaneClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Yardımcısı {0}%", 60);
+                        LaneClearMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
+                        LaneClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Manager {0}%", 60);
                         LaneClearMenu.AddSeparator(0);
-                        JungleClearMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
-                        JungleClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Yardımcısı {0}%", 60);
+                        JungleClearMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
+                        JungleClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Manager {0}%", 60);
                         JungleClearMenu.AddSeparator(0);
                     }
-                    KillStealMenu.CreateCheckBox(i.Slot, i.Slot + " KillÇalma");
-                    DrawMenu.CreateCheckBox(i.Slot, "Göster " + i.Slot);
+                    KillStealMenu.CreateCheckBox(i.Slot, i.Slot + " KillSteal");
+                    DrawMenu.CreateCheckBox(i.Slot, "Draw " + i.Slot);
                 });
 
             AutoMenu.Add("Wmode", new ComboBox("W ile Rakibe Yaklaşma/Uzaklaşma", 1, "Kendine", "Düşmana"));
-            AutoMenu.CreateCheckBox("GapW", "Auto W Anti-GapCloser");
+            AutoMenu.CreateCheckBox("GapW", "Tehlikeli Yakınlaşmayı Önlemek için W");
             AutoMenu.CreateCheckBox("IntW", "Tehlikeli yeteneği bozmak için W kullan");
             AutoMenu.CreateCheckBox("IntR", "Tehlikeli yeteneği bozmak için R kullan");
             AutoMenu.CreateCheckBox("Qunk", "Ölmeyecek Minyona Otomatik Q");

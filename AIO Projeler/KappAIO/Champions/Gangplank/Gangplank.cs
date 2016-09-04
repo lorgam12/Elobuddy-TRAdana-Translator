@@ -35,13 +35,13 @@ namespace KappAIO.Champions.Gangplank
             R = new Spell.Skillshot(SpellSlot.R, int.MaxValue, SkillShotType.Circular, 500, int.MaxValue, 600);
 
             MenuIni = MainMenu.AddMenu(MenuName, MenuName);
-            AutoMenu = MenuIni.AddSubMenu("Otomatik");
-            ComboMenu = MenuIni.AddSubMenu("Kombo");
-            //HarassMenu = MenuIni.AddSubMenu("Dürtme");
-            JungleClearMenu = MenuIni.AddSubMenu("Ormantemizleme");
-            LaneClearMenu = MenuIni.AddSubMenu("Lanetemizleme");
-            KillStealMenu = MenuIni.AddSubMenu("KillÇalma");
-            DrawMenu = MenuIni.AddSubMenu("Göstergeler");
+            AutoMenu = MenuIni.AddSubMenu("Auto");
+            ComboMenu = MenuIni.AddSubMenu("Combo");
+            //HarassMenu = MenuIni.AddSubMenu("Harass");
+            JungleClearMenu = MenuIni.AddSubMenu("JungleClear");
+            LaneClearMenu = MenuIni.AddSubMenu("LaneClear");
+            KillStealMenu = MenuIni.AddSubMenu("KillSteal");
+            DrawMenu = MenuIni.AddSubMenu("Drawings");
             SpellList.Add(Q);
             SpellList.Add(E);
             SpellList.Add(R);
@@ -52,21 +52,21 @@ namespace KappAIO.Champions.Gangplank
                     ComboMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
                     if (i != R)
                     {
-                        //HarassMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
+                        //HarassMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
                         //HarassMenu.AddSeparator(0);
-                        LaneClearMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
+                        LaneClearMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
                         LaneClearMenu.AddSeparator(0);
-                        JungleClearMenu.CreateCheckBox(i.Slot, "Kullan " + i.Slot);
+                        JungleClearMenu.CreateCheckBox(i.Slot, "Use " + i.Slot);
                         JungleClearMenu.AddSeparator(0);
-                        DrawMenu.CreateCheckBox(i.Slot, "Göster " + i.Slot);
+                        DrawMenu.CreateCheckBox(i.Slot, "Draw " + i.Slot);
                         if (i != E)
                         {
-                            //HarassMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Yardımcısı {0}%", 60);
-                            LaneClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Yardımcısı {0}%", 60);
-                            JungleClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Yardımcısı {0}%", 60);
+                            //HarassMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Manager {0}%", 60);
+                            LaneClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Manager {0}%", 60);
+                            JungleClearMenu.CreateSlider(i.Slot + "mana", i.Slot + " Mana Manager {0}%", 60);
                         }
                     }
-                    KillStealMenu.CreateCheckBox(i.Slot, i.Slot + " KillÇalma");
+                    KillStealMenu.CreateCheckBox(i.Slot, i.Slot + " KillSteal");
                 });
 
             MenuIni.AddGroupLabel("W ile Arındırma için Activator Kontrol Et > Qss");
